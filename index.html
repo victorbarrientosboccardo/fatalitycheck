@@ -3,6 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#13171C">
+<link rel="icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230B1F3B%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233AA9FF%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22butt%22%3E%3Cpath%20d%3D%22M17%2017%2047%2047%22%20opacity%3D%22.55%22%2F%3E%3Cpath%20d%3D%22M47%2017%2017%2047%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
+<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230B1F3B%22%2F%3E%3Cg%20fill%3D%22none%22%20stroke%3D%22%233AA9FF%22%20stroke-width%3D%2211%22%20stroke-linecap%3D%22butt%22%3E%3Cpath%20d%3D%22M17%2017%2047%2047%22%20opacity%3D%22.55%22%2F%3E%3Cpath%20d%3D%22M47%2017%2017%2047%22%2F%3E%3C%2Fg%3E%3C%2Fsvg%3E">
 <title>FatalityCheck — Asesor de Seguridad Minera</title>
 <style>
   :root{
@@ -32,6 +35,32 @@
     opacity:.9;
   }
   header{padding:46px 22px 14px; max-width:900px; margin:0 auto;}
+  /* ===== Piloto: invitacion WhatsApp, solo sitio web (v1.37) ===== */
+  .piloto{display:none; margin-top:30px;}
+  .piloto-caja{display:flex; align-items:center; justify-content:space-between;
+    gap:16px; flex-wrap:wrap;
+    background:linear-gradient(180deg,#171E26 0%, #141A20 100%);
+    border:1px solid var(--linea); border-left:2px solid var(--verde);
+    border-radius:14px; padding:16px 18px;}
+  .piloto-txt{display:flex; flex-direction:column; gap:3px;}
+  .piloto-txt b{font-size:12px; letter-spacing:.15em; text-transform:uppercase;
+    color:var(--verde); font-weight:700;}
+  .piloto-txt span{font-size:13.5px; color:var(--gris-texto); max-width:54ch;}
+  .piloto-btn{display:inline-flex; align-items:center; gap:8px; text-decoration:none;
+    background:#1D2A22; color:#8FD5A6; border:1px solid #2C4635; border-radius:10px;
+    padding:11px 16px; font-size:13.5px; font-weight:700; white-space:nowrap;
+    transition:background .15s ease, border-color .15s ease;}
+  .piloto-btn:hover{background:#24352A; border-color:var(--verde);}
+  /* ===== Marca: isotipo monocromatico + logotipo (v1.36) ===== */
+  .marca{display:flex; align-items:center; gap:11px; margin-bottom:20px;}
+  .marca svg{width:30px; height:30px; flex:none; color:var(--hueso); opacity:.88;}
+  .marca-nom{font-size:17px; font-weight:600; letter-spacing:.004em;
+    color:var(--hueso); opacity:.94; white-space:nowrap;}
+  .marca-nom b{font-weight:600; color:var(--gris-texto);}
+  @media (max-width:420px){
+    .marca svg{width:26px; height:26px;}
+    .marca-nom{font-size:15px;}
+  }
   .eyebrow{
     font-size:11px; letter-spacing:.26em; text-transform:uppercase;
     color:var(--amarillo); font-weight:700; margin-bottom:14px; opacity:.92;
@@ -560,7 +589,14 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 <body>
 <div class="cinta" aria-hidden="true"></div>
 <header>
-  <div class="eyebrow">FATALITYCHECK v<span id="appVerEye">1.20</span> &middot; 1.626 fatalidades reales &middot; 1995 a hoy</div>
+  <div class="marca">
+    <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="13" role="img" aria-label="FatalityCheck">
+      <path d="M15 15 49 49" opacity=".5"/>
+      <path d="M49 15 15 49"/>
+    </svg>
+    <span class="marca-nom">Fatality<b>Check</b></span>
+  </div>
+  <div class="eyebrow">v<span id="appVerEye">1.37</span> &middot; 1.626 fatalidades reales &middot; 1995 a hoy</div>
   <h1>¿Qué tarea vas a ejecutar <span>hoy</span>?</h1>
   <p class="sub">Describe tu tarea y obtén los controles críticos y sesgos cognitivos, según accidentes fatales reales investigados por el Departamento Laboral de USA. <b>Cada consejo le costó la vida a alguien.</b></p>
 </header>
@@ -584,9 +620,10 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
   <div class="estado" id="estado"></div>
   <div class="resultados" id="res"></div>
   </div>
+  <div class="piloto" id="piloto"></div>
 </main>
 <footer>
-  FatalityCheck v<span id="appVer">1.20</span> © · Fuente: informes finales de investigación de accidentes fatales en minería (superficie y subterránea), MSHA (U.S. Dept. of Labor). Cubre el 100% de la base analizada: 1.626 fatalidades, 1995 a la fecha. Esta herramienta es de apoyo preventivo y no reemplaza el procedimiento de trabajo seguro, el ART ni el reglamento interno de tu faena.
+  FatalityCheck v<span id="appVer">1.37</span> © · Fuente: informes finales de investigación de accidentes fatales en minería (superficie y subterránea), MSHA (U.S. Dept. of Labor). Cubre el 100% de la base analizada: 1.626 fatalidades, 1995 a la fecha. Esta herramienta es de apoyo preventivo y no reemplaza el procedimiento de trabajo seguro, el ART ni el reglamento interno de tu faena.
 </footer>
 
 <script>
@@ -703,7 +740,7 @@ const KW_CL = {
 for(const [k,arr] of Object.entries(KW_CL)){ if(CATS[k]){ for(const w of arr){ if(!CATS[k].kw.includes(w)) CATS[k].kw.push(w); } } }
 
 /* ===== Versión de la aplicación (se incrementa en cada nueva versión) ===== */
-const APP_VERSION = "1.35";
+const APP_VERSION = "1.37";
 const OFFLINE = true;   // build para Google Play: sin llamadas a la API (100% offline)
 (function(){["appVer","appVerEye"].forEach(id=>{const _v=document.getElementById(id); if(_v)_v.textContent=APP_VERSION;});})();
 
@@ -1620,6 +1657,29 @@ Entrega 3 a 5 tips específicos para la tarea (no genéricos), en español de Ch
     _btnVerde(false);
   }
 }
+/* ===== v1.37 - Invitacion a prueba piloto =====
+   Se inyecta SOLO fuera de la app nativa: en Android no aparece.
+   El enlace se arma en JS, asi no queda como recurso externo en el HTML. */
+(function(){
+  try{
+    if(_appNativa()) return;
+    var cont=document.getElementById("piloto"); if(!cont) return;
+    var msg="Hola, quiero participar en la prueba piloto de FatalityCheck."
+      +"\nMi nombre es:"
+      +"\nEmpresa/faena:"
+      +"\nEmail Gmail:";
+    var url="https://wa.me/56965945170?text="+encodeURIComponent(msg);
+    cont.innerHTML='<div class="piloto-caja">'
+      +'<div class="piloto-txt"><b>Prueba piloto abierta</b>'
+      +'<span>Si quieres usar FatalityCheck en tu faena y aportar al desarrollo, '
+      +'solicita tu acceso. Respondemos por WhatsApp.</span></div>'
+      +'<a class="piloto-btn" href="'+url+'" target="_blank" rel="noopener noreferrer">'
+      +'<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true">'
+      +'<path d="M12 2A10 10 0 0 0 3.5 17.2L2 22l4.9-1.5A10 10 0 1 0 12 2zm0 2a8 8 0 1 1-4.2 14.8l-.3-.2-2.9.9.9-2.8-.2-.3A8 8 0 0 1 12 4z"/>'
+      +'</svg> Solicitar por WhatsApp</a></div>';
+    cont.style.display="block";
+  }catch(e){}
+})();
 document.getElementById("tarea").addEventListener("keydown",e=>{
   if(e.key==="Enter" && !e.shiftKey){ e.preventDefault(); onTips(); }
 });
