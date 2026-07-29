@@ -178,11 +178,30 @@
   .chk-item{display:flex;gap:10px;align-items:flex-start;background:#171e26;border:1px solid #252d36;border-radius:9px;padding:10px 12px;margin:6px 0;cursor:pointer;user-select:none}
   .chk-item:active{transform:scale(.995)}
   .chk-on{background:#0e2a1a;border-color:#1f7a44}
+  .chk-no{background:#2a1113;border-color:#8a2f31}
+  .chk-no .chk-box{border-color:#e0565a;color:#e0565a}
+  .chk-na{background:#1a1f26;border-color:#3a434e;opacity:.85}
+  .chk-na .chk-box{border-color:#7f8b97;color:#9fb4c7;font-size:9px}
+  .hist-no{color:#e0565a}
   .chk-box{flex:none;width:22px;height:22px;border:2px solid #5a6672;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#38d66b;margin-top:1px}
   .chk-on .chk-box{border-color:#38d66b}
   .chk-txt{font-size:13.5px;line-height:1.35;color:#e8eef4}
   .chk-txt b{display:block}
   .chk-txt small{display:block;color:#a7b0ba;font-size:11.5px;margin-top:2px}
+  @keyframes chkflash{0%{box-shadow:0 0 0 3px rgba(56,214,107,.9)}100%{box-shadow:0 0 0 3px rgba(56,214,107,0)}}
+  .chk-flash{animation:chkflash 1.4s ease-out 2;border-radius:12px}
+  .chk-btn-fin{width:100%;margin-top:12px;background:linear-gradient(180deg,#38d66b,#1f9d4d);color:#07230f;font-weight:700;border:none;border-radius:10px;padding:13px 16px;font-size:15px;cursor:pointer}
+  .chk-datos{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 10px}
+  .chk-datos-t{flex-basis:100%;font-size:11.5px;color:#a7b0ba}
+  .chk-datos input{flex:1 1 140px;background:#10161d;border:1px solid #2a3340;border-radius:8px;color:#e8eef4;padding:9px 10px;font-size:13px;font-family:inherit}
+  .hist-link{background:none;border:1px solid #2a3340;border-radius:8px;color:#9fb4c7;padding:7px 12px;font-size:12.5px;cursor:pointer;font-family:inherit}
+  .hist-caja{margin-top:8px;border:1px solid #252d36;border-radius:10px;overflow:hidden}
+  .hist-item{display:flex;gap:10px;align-items:center;padding:8px 12px;border-bottom:1px solid #1d242d;cursor:pointer;font-size:12.5px}
+  .hist-item:last-child{border-bottom:none}
+  .hist-item:hover{background:#151c24}
+  .hist-f{color:#7f8b97;flex:none}
+  .hist-t{color:#dbe4ec;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .hist-m{color:#38d66b;font-weight:700;flex:none}
   .sug-chip:hover{border-color:var(--amarillo);background:rgba(255,201,24,.06);}
   .sug-chip s{color:var(--rojo);opacity:.85;}
   .sug-chip b{color:var(--amarillo);}
@@ -608,7 +627,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     </svg>
     <span class="marca-nom">Fatality<b>Check</b></span>
   </div>
-  <div class="eyebrow">v<span id="appVerEye">1.59</span> &middot; 1.647 fatalidades reales &middot; 1995 a hoy</div>
+  <div class="eyebrow">v<span id="appVerEye">1.68</span> &middot; 1.647 fatalidades reales &middot; 1995 a hoy</div>
   <h1>¿Qué tarea vas a ejecutar <span>hoy</span>?</h1>
   <div id="hallazgo" style="margin:10px auto 0;max-width:680px;padding:9px 14px;border:1px solid #3a4450;border-left:3px solid #FFC918;border-radius:10px;background:#171E26;color:#ECEAE4;font-size:13.5px;line-height:1.45;text-align:left;display:none"></div>
   <p class="sub">Describe tu tarea y obtén los controles críticos y sesgos cognitivos. <b>No seguir estos consejos le costó la vida a alguien.</b></p>
@@ -626,9 +645,12 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
       <button class="principal" id="btn" onclick="onTips()" disabled>Obtener tips</button>
     </div>
     <div class="ac-estado" id="acEstado" aria-live="polite"></div>
+    <div id="chkzone"></div>
     <div class="sugerencias" id="sugerencias" aria-live="polite"></div>
     <div id="tareaCanon" style="margin:8px 0"></div>
   <div class="tareas-sim" id="tareasSim" aria-live="polite"></div>
+  <div id="histlink" style="margin-top:10px"></div>
+  <div id="histzone"></div>
   </div>
   <div class="estado" id="estado"></div>
   <div class="resultados" id="res"></div>
@@ -636,7 +658,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
   <div class="piloto" id="piloto"></div>
 </main>
 <footer>
-  FatalityCheck v<span id="appVer">1.59</span> © · Fuente: informes finales de investigación de accidentes fatales en minería (superficie y subterránea), MSHA (U.S. Dept. of Labor). Cubre el 100% de la base analizada: 1.647 fatalidades, 1995 a la fecha. Esta herramienta es de apoyo preventivo y no reemplaza el procedimiento de trabajo seguro, el ART ni el reglamento interno de tu faena.
+  FatalityCheck v<span id="appVer">1.68</span> © · Fuente: informes finales de investigación de accidentes fatales en minería (superficie y subterránea), MSHA (U.S. Dept. of Labor). Cubre el 100% de la base analizada: 1.647 fatalidades, 1995 a la fecha. Esta herramienta es de apoyo preventivo y no reemplaza el procedimiento de trabajo seguro, el ART ni el reglamento interno de tu faena.
 </footer>
 
 <script>
@@ -710,10 +732,14 @@ const CATS = {
   ["Distancia y refugio según el plan, sin excepciones","Retírate con todo el equipo fuera del área de evacuación definida, a refugio o posición protegida. En un caso del corpus, 47 metros no bastaron contra una roca proyectada de 44 kilos."],
   ["Espera post-tronadura obligatoria","No ingreses al sector del disparo hasta que se cumpla el tiempo de espera y el responsable examine gases, terreno y tiros quedados. El terreno recién tronado puede colapsar."],
   ["Nunca bajo frentes cargados o inestables","Revisa la estabilidad del talud antes de transitar o trabajar bajo él mientras dure la campaña de carguío de explosivos."]]},
- highwall:{kw:["highwall","talud","pared","banco","frente","desquinche","saneo","geotecn","colapso","colapsar","caida de roca","caída de roca","caida de material","caída de material","caida de rocas","desprendimiento","derrumbe","planchon","planchón","costilla"],
-  n:"Control de terreno y highwalls", tips:[
+ highwall:{kw:["highwall","talud","pared","banco","frente","desquinche","saneo","geotecn","colapso","colapsar","caida de roca","caída de roca","caida de material","caída de material","caida de rocas","desprendimiento","derrumbe","planchon","planchón","costilla","subterran","tunel","sostenimiento","bocamina","macizo","subsidencia"],
+  n:"Control de terreno (rajo y subterránea)", tips:[
   ["Peligro observado = trabajo detenido","Si aparecen grietas, sobre-excavación o material suelto en el talud, detén el trabajo bajo él hasta sanearlo. En 2011 una administración observó los peligros un día antes y siguió cargando: el operador murió al día siguiente."],
-  ["Examen del frente antes de cada turno","Inspecciona y documenta el estado del talud y los bancos antes de posicionar personas o equipos, y repítelo después de lluvias, tronaduras o cambios de temperatura."]]},
+  ["Examen del frente antes de cada turno","Inspecciona y documenta el estado del talud y los bancos antes de posicionar personas o equipos, y repítelo después de lluvias, tronaduras o cambios de temperatura."],
+  ["Fortificación al día antes de avanzar","No avances ni trabajes bajo techo o cajas sin fortificar según el estándar (pernos, malla, shotcrete o marcos). La fortificación pendiente detiene la frente: ningún avance vale exponerse a techo desnudo."],
+  ["Acuñadura desde zona protegida","Acuña siempre desde terreno ya fortificado hacia la tierra suelta, con barretilla del largo adecuado y fuera de la línea de caída del planchón. Revisa techo y cajas al entrar a la labor y después de cada tronadura."],
+  ["Las paredes de la labor también fallan","Revisa y trata las paredes de la labor (costillas y cajas), no solo el techo: la roca suelta lateral aplasta igual. Acuña a la altura de la vista y sobre ella antes de posicionarte a trabajar."]
+  ]},
  agua:{kw:["laguna","pond","draga","dredge","barcaza","rio","agua","dique","relave","embalse","bote","drenaje"],
   n:"Trabajo cerca o sobre agua", tips:[
   ["Chaleco salvavidas obligatorio","Usa chaleco siempre que trabajes sobre el agua o junto a ella con riesgo de caída. Sin excepciones y sin el es solo un momento."],
@@ -785,7 +811,7 @@ for(const k in CATS){
 }
 
 /* ===== Versión de la aplicación (se incrementa en cada nueva versión) ===== */
-const APP_VERSION = "1.59";
+const APP_VERSION = "1.68";
 const OFFLINE = true;   // build para Google Play: sin llamadas a la API (100% offline)
 
 /* ===== Banner de hallazgos del corpus (v1.50) =====
@@ -1002,6 +1028,10 @@ function _casoParaTip(titulo, detalle, candidatos, usados){
     for(const w of _bmToks(c.r||"")){
       if(q.has(w) && !vistos.has(w)){ vistos.add(w); sc += (ix && ix.idf.get(w)) || 1; }
     }
+    /* v1.60: una sola palabra compartida no es afinidad. El caso del metano
+       llego a citarse en un control de candados porque compartia solo la
+       palabra "ocurrieron". Se exigen al menos 2 palabras distintas. */
+    if(vistos.size < 2) sc = 0;
     // Preferencia de sector: el 40% del corpus es carbon (metano, polvo, techo
     // y costilla, longwall), realidades que no existen en la mineria chilena.
     // Un caso metal/no-metal desempata a favor; uno de carbon claramente mejor
@@ -1037,33 +1067,106 @@ function _ultVigente(){ return !!(ULT && ULT.vigente); }
 function _btnVerde(on){ var b=document.getElementById("btn"); if(!b) return;
   if(on){ b.style.background="linear-gradient(180deg,#38d66b,#1f9d4d)"; b.style.color="#07230f"; b.innerHTML="⬇ Generar checklist PDF"; }
   else { b.style.background=""; b.style.color=""; b.innerHTML="Obtener tips"; } }
+function _escAttr(x){ return String(x||"").replace(/&/g,"&amp;").replace(/"/g,"&quot;").replace(/</g,"&lt;"); }
+function _lsGet(k){ try{ return window.localStorage?localStorage.getItem(k):null; }catch(e){ return null; } }
+function _lsSet(k,v){ try{ if(window.localStorage) localStorage.setItem(k,v); }catch(e){} }
+function _datosLeer(){ try{ return JSON.parse(_lsGet("fc_datos")||"{}")||{}; }catch(e){ return {}; } }
+function _datosGuardar(){ try{ var g=function(id){var e=document.getElementById(id);return e&&e.value?String(e.value).trim():"";};
+  _lsSet("fc_datos", JSON.stringify({ej:g("fEj"),sup:g("fSup"),area:g("fArea")})); }catch(e){} }
+/* v1.65: historial local de checklists generados (sin cuenta, sin servidor). */
+function _histAll(){ try{ return JSON.parse(_lsGet("fc_hist")||"[]")||[]; }catch(e){ return []; } }
+function _histAdd(){ try{
+  if(!ULT||!ULT.tarea) return;
+  var L=_histAll();
+  var _cH={si:0,no:0,na:0};
+  (ULT.checks||[]).forEach(function(v){ if(v===1||v===true)_cH.si++; else if(v===2)_cH.no++; else if(v===3)_cH.na++; });
+  L.unshift({f:new Date().toISOString(), t:ULT.tarea, n:(ULT._finales||[]).length,
+    m:_cH.si+_cH.na, no:_cH.no, chk:(ULT.checks||[]).slice(), c:(ULT.cats||[]).slice(0,4)});
+  if(L.length>100) L=L.slice(0,100);
+  _lsSet("fc_hist", JSON.stringify(L)); renderHistLink();
+}catch(e){} }
+function renderHistLink(){ try{
+  var e=document.getElementById("histlink"); if(!e) return;
+  var n=_histAll().length;
+  e.innerHTML = n? '<button type="button" class="hist-link" onclick="toggleHist()">\ud83d\uddc2 Mis checklists ('+n+')</button>' : "";
+}catch(e){} }
+var _histAbierto=false;
+function toggleHist(){ _histAbierto=!_histAbierto; renderHist(); }
+function renderHist(){ try{
+  var z=document.getElementById("histzone"); if(!z) return;
+  var L=_histAll();
+  if(!_histAbierto||!L.length){ z.innerHTML=""; return; }
+  var h='<div class="hist-caja">';
+  L.slice(0,30).forEach(function(x,i){
+    var d=new Date(x.f);
+    var f=("0"+d.getDate()).slice(-2)+"-"+("0"+(d.getMonth()+1)).slice(-2)+" "+("0"+d.getHours()).slice(-2)+":"+("0"+d.getMinutes()).slice(-2);
+    h+='<div class="hist-item" onclick="histAbrir('+i+')"><span class="hist-f">'+f+'</span>'
+      +'<span class="hist-t">'+_escChk(x.t)+'</span>'
+      +'<span class="hist-m'+(x.no?' hist-no':'')+'">'+(x.no?('\u2715 NO:'+x.no):(x.m+'/'+x.n+(x.m===x.n&&x.n?' \u2713':'')))+'</span></div>';
+  });
+  h+='</div>';
+  z.innerHTML=h;
+}catch(e){} }
+async function histAbrir(i){ try{
+  var L=_histAll(); var x=L[i]; if(!x) return;
+  var ta=document.getElementById("tarea"); if(ta) ta.value=x.t;
+  await analizar(true);
+  await onTips();
+  if(ULT && ULT._finales && x.chk && x.chk.length===ULT._finales.length){
+    ULT.checks=x.chk.slice(); renderChecklistPantalla();
+  }
+  _histAbierto=false; renderHist();
+}catch(e){} }
 function _escChk(x){ return String(x||"").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
 function renderChecklistPantalla(){
-  var cont=document.getElementById("res"); if(!cont||!ULT||!ULT._finales) return;
+  var cont=document.getElementById("chkzone")||document.getElementById("res"); if(!cont||!ULT||!ULT._finales) return;
   var F=ULT._finales, C=ULT.checks||[];
-  var h='<div class="chk-cab">Checklist en pantalla: toca cada ítem verificado. El PDF saldrá con tus marcas.</div>';
+  var D=_datosLeer();
+  var h='<div class="chk-cab">Checklist en pantalla. Cada toque alterna: SÍ \u2713 \u2192 NO \u2715 \u2192 N.A. El PDF saldrá con tus respuestas.</div>';
+  h+='<div class="chk-datos"><div class="chk-datos-t">Datos del documento (opcionales; fecha y hora se completan solas)</div>'
+    +'<input id="fEj" placeholder="Ejecutor" value="'+_escAttr(D.ej)+'" onchange="_datosGuardar()">'
+    +'<input id="fSup" placeholder="Supervisor" value="'+_escAttr(D.sup)+'" onchange="_datosGuardar()">'
+    +'<input id="fArea" placeholder="Área / Sector" value="'+_escAttr(D.area)+'" onchange="_datosGuardar()">'
+    +'</div>';
   var num=1, enB=false;
   h+='<div class="chk-sec chk-secA">A. VERIFICACIÓN CONDUCTUAL</div>';
   F.forEach(function(it,i){
     if(!it.sesgo && !enB){ enB=true; num=1;
       h+='<div class="chk-sec chk-secB">B. CONTROLES DE SEGURIDAD</div>'; }
-    h+='<div class="chk-item'+(C[i]?' chk-on':'')+'" onclick="toggleChk('+i+')">'
-      +'<span class="chk-box">'+(C[i]?'\u2713':'')+'</span>'
+    var _st=C[i]===true?1:(C[i]||0);
+    var _cl=_st===1?' chk-on':(_st===2?' chk-no':(_st===3?' chk-na':''));
+    var _bx=_st===1?'\u2713':(_st===2?'\u2715':(_st===3?'<small>N.A.</small>':''));
+    h+='<div class="chk-item'+_cl+'" onclick="toggleChk('+i+')">'
+      +'<span class="chk-box">'+_bx+'</span>'
       +'<span class="chk-txt"><b>'+(it.sesgo?'A':'B')+num+'. '+_escChk(it.t)+'</b>'
       +(it.d?'<small>'+_escChk(it.d)+'</small>':'')
       +'</span></div>';
     num++;
   });
+  /* v1.62: boton tambien al final de la lista, para no tener que volver arriba
+     despues de marcar en el telefono. */
+  h+='<button type="button" class="principal chk-btn-fin" onclick="onTips()">\u2B07 Generar PDF con lo marcado</button>';
   cont.innerHTML=h;
+}
+/* v1.66: estados por item: 0 sin responder, 1 SI, 2 NO, 3 N.A. */
+function _chkCuenta(){
+  var c={si:0,no:0,na:0,sr:0};
+  (ULT&&ULT.checks||[]).forEach(function(v){ if(v===1||v===true)c.si++; else if(v===2)c.no++; else if(v===3)c.na++; else c.sr++; });
+  return c;
 }
 function toggleChk(i){
   if(!ULT||!ULT.checks) return;
-  ULT.checks[i]=!ULT.checks[i];
+  try{ _datosGuardar(); }catch(e){}
+  var v=ULT.checks[i]; if(v===true)v=1; if(!v)v=0;
+  ULT.checks[i]=(v+1)%4;
   renderChecklistPantalla();
   try{
-    var t=ULT.checks.filter(Boolean).length, n=ULT._finales.length;
+    var c=_chkCuenta(), n=ULT._finales.length;
     var _es=document.getElementById("estado");
-    if(_es) _es.textContent = t+" de "+n+" ítems marcados. Presiona el botón para generar el PDF con tus marcas.";
+    if(_es){
+      if(c.no>0) _es.textContent="⚠ "+c.no+" control(es) en NO: la tarea NO debe iniciarse. Genera el PDF y avisa al supervisor.";
+      else _es.textContent="SÍ "+c.si+" · N.A. "+c.na+" · sin responder "+c.sr+" de "+n+". Presiona el botón para generar el PDF.";
+    }
   }catch(e){}
 }
 function onTips(){
@@ -1082,6 +1185,19 @@ function onTips(){
       if(!ULT.checks || ULT.checks.length!==ULT._finales.length) ULT.checks=ULT._finales.map(function(){return false;});
       renderChecklistPantalla();
       ULT.checksListo=true;
+      /* v1.64: el checklist ahora nace PEGADO al boton (zona #chkzone), con un
+         destello de borde para llamar la vista, y el desplazamiento se hace en
+         el siguiente frame para que el layout ya exista. */
+      try{
+        var _zn=document.getElementById("chkzone");
+        if(_zn){ _zn.classList.remove("chk-flash"); void _zn.offsetWidth; _zn.classList.add("chk-flash"); }
+        var _sc=function(){ try{
+          var _rz=document.querySelector("#chkzone .chk-cab")||_zn;
+          if(_rz && _rz.scrollIntoView) _rz.scrollIntoView({behavior:"smooth", block:"start"});
+        }catch(e){} };
+        if(window.requestAnimationFrame) requestAnimationFrame(function(){ requestAnimationFrame(_sc); });
+        else setTimeout(_sc, 60);
+      }catch(e){}
       var _esx=document.getElementById("estado");
       if(_esx) _esx.textContent="Marca con un toque los ítems que ya verificaste (puedes dejarlos en blanco para llenar en papel) y presiona el botón para generar el PDF.";
       var _bx=document.getElementById("btn"); if(_bx) _bx.innerHTML="\u2B07 Generar PDF con lo marcado";
@@ -1094,6 +1210,7 @@ function onTips(){
   var _bw=document.getElementById("btnWhatsapp"); if(_bw) _bw.disabled=false;
   var _es=document.getElementById("estado"); if(_es) _es.textContent="Checklist generado y abierto. También puedes enviarlo por email o WhatsApp arriba.";
   descargarPDF(document.getElementById("btn"));
+  try{ _histAdd(); }catch(e){}
 } // {tarea, cats, casos, ia}
 
 /* ===== Glosario: deja el texto del PDF en español claro para público general =====
@@ -1114,6 +1231,8 @@ function esES(t){
   // 1) Compuestos / multipalabra (antes que las palabras sueltas)
   const COMP=[
     [/\bcontinuous\s+miner\b/gi,"minador continuo"],
+    [/\bpat[íi]n[\s-]?steer\b/gi,"minicargador"],   /* v1.61: skid-steer a medio traducir en el corpus */
+    [/\bskid[\s-]?steer\b/gi,"minicargador"],
     [/\bconveyor\s+drive\b/gi,"accionamiento de correa"],
     [/\btripper\s+conveyor\b/gi,"carro tripper de correa"],
     [/\barc[\s-]?flash\b/gi,"arco eléctrico"],
@@ -1213,15 +1332,33 @@ function construirPDF(){
   doc.setFontSize(10); doc.setTextColor(255,201,24);
   doc.text(doc.splitTextToSize("Tarea: "+esES(ULT.tarea), W-2*M).slice(0,1), M, 15);
   doc.setFontSize(6.8); doc.setTextColor(230,230,230); doc.setFont("helvetica","normal");
-  doc.text("Verificar ANTES de iniciar la tarea · Basada en el 100% de los accidentes fatales investigados en EE.UU.: 1.647 fatalidades (1995 a la fecha)", M, 19.5);
+  doc.text("Verificar ANTES de iniciar la tarea · Basada en informes de investigación de accidentes fatales (1995 a la fecha)", M, 19.5);
+
+  /* v1.67: si hay algún control en NO, el documento entero lo advierte con una
+     leyenda diagonal DETENER. Se dibuja antes del contenido para quedar detrás
+     y no tapar la lectura de los controles. */
+  var _hayNO = !!(ULT.checks && ULT.checks.some && ULT.checks.some(function(v){ return v===2; }));
+  if(_hayNO){
+    doc.setFont("helvetica","bold"); doc.setFontSize(92);
+    doc.setTextColor(236,164,164);
+    doc.text("DETENER", 24, 216, {angle:38});
+    doc.setFontSize(8); doc.setTextColor(27,33,39);
+  }
 
   // ===== Identificación =====
   y = 27;
   doc.setDrawColor(150,160,170); doc.setTextColor(27,33,39); doc.setFontSize(8); doc.setFont("helvetica","bold");
-  const campo=(x,w,lab)=>{ doc.text(lab, x, y); doc.line(x+doc.getTextWidth(lab)+1.5, y+0.5, x+w, y+0.5); };
-  campo(M, 92, "Ejecutor:"); campo(110, 60, "Equipo/Identificación:"); campo(175, W-M-175+27, "Fecha:");
+  const campo=(x,w,lab,valTxt)=>{ doc.setFont("helvetica","bold"); doc.text(lab, x, y);
+    const _x0=x+doc.getTextWidth(lab)+1.5; doc.line(_x0, y+0.5, x+w, y+0.5);
+    if(valTxt){ doc.setFont("helvetica","normal"); doc.text(String(valTxt).slice(0,48), _x0+1.2, y-0.4); doc.setFont("helvetica","bold"); } };
+  /* v1.65: campos opcionales llenados en pantalla; fecha y hora del dispositivo. */
+  const _dz=id=>{ try{ const e=document.getElementById(id); return (e&&e.value?String(e.value):"").trim(); }catch(e){ return ""; } };
+  const _dtA=new Date();
+  const _fchA=("0"+_dtA.getDate()).slice(-2)+"-"+("0"+(_dtA.getMonth()+1)).slice(-2)+"-"+_dtA.getFullYear();
+  const _hraA=("0"+_dtA.getHours()).slice(-2)+":"+("0"+_dtA.getMinutes()).slice(-2);
+  campo(M, 92, "Ejecutor:", _dz("fEj")); campo(110, 60, "Equipo/Identificación:"); campo(175, W-M-175+27, "Fecha:", _fchA);
   y += 6.5;
-  campo(M, 92, "Supervisor:"); campo(110, 60, "Área/Sector:"); campo(175, W-M-175+27, "Hora:");
+  campo(M, 92, "Supervisor:", _dz("fSup")); campo(110, 60, "Área/Sector:", _dz("fArea")); campo(175, W-M-175+27, "Hora:", _hraA);
 
   // ===== Estadística de contexto =====
   y += 6;
@@ -1230,9 +1367,11 @@ function construirPDF(){
     const ttD = ULT.casos.filter(c=>c.tt==="Sí"||c.tt==="No");
     const sinTT = ttD.filter(c=>c.tt==="No").length;
     const eppNo = ULT.casos.filter(c=>c.epp).length;
-    let s = "Esta tarea se relaciona con "+n+" muertes en EE.UU. (1995 a la fecha)";
-    if(ttD.length&&sinTT) s += " · sin capacitación en "+sinTT+" de "+ttD.length+" casos con dato";
-    if(eppNo) s += " · sin EPP crítico en "+eppNo;
+    /* v1.60: se elimina el conteo agregado de muertes (aprobado por el autor).
+       La linea queda con las estadisticas de capacitacion y EPP. */
+    let s = "";
+    if(ttD.length&&sinTT) s += "Sin capacitación en "+sinTT+" de "+ttD.length+" casos con dato";
+    if(eppNo) s += (s?" · sin":"Sin")+" EPP crítico en "+eppNo+" casos";
 
     // Jerarquia de control que habria evitado el accidente, segun la
     // clasificacion del propio informe MSHA. Va en su propia linea: sumada al
@@ -1290,7 +1429,9 @@ function construirPDF(){
     const def = CATS[cat]; if(!def) return;
     const cc = CASOS.filter(c=>c.cats.includes(cat));
     def.tips.forEach((t,i)=>{ if(items.length<14){
-      const _c = _casoParaTip(t[0], t[1], cc, _casosUsados) || cc[i] || cc[0] || null;
+      /* v1.60: si no hay un caso realmente afin al control, es mejor no citar
+         ninguno que rellenar con un caso cualquiera de la categoria (aprobado). */
+      const _c = _casoParaTip(t[0], t[1], cc, _casosUsados) || null;
       if(_c) _casosUsados.add(_c.id);
       items.push({t:t[0], d:t[1], caso:_c, sec:def.n});
     }});
@@ -1315,9 +1456,11 @@ function construirPDF(){
   _seleccion.forEach(o=>{
     if(items.length<20){
       const _o = o.sp ? SUBSESGOS[o.sp.id] : null;
-      items.push({t: _o ? _o.n : o.p,
-        d: _o ? _o.d : ("En qué consiste: "+(SESGOS_DESC[o.p]||"")),
-        contra: "\u00BB "+(_o ? _o.c : (SESGOS_INFO[o.p]||"")),
+      /* v1.63 (Opcion A aprobada): lo chequeable es la CONTRAMEDIDA en primera
+         persona; el sesgo pasa a ser linea informativa. Asi marcar = bueno en
+         todo el documento, igual que en la seccion B. */
+      items.push({t: (_o ? _o.c : (SESGOS_INFO[o.p]||o.p)),
+        d: "Sesgo a descartar: "+(_o ? _o.n : o.p)+" — "+(_o ? _o.d : (SESGOS_DESC[o.p]||"")),
         caso:null, sesgo:true});
     }
   });
@@ -1375,11 +1518,16 @@ function construirPDF(){
     if(it.sesgo){ doc.setDrawColor(197,90,17); } else { doc.setDrawColor(31,78,121); }
     doc.setLineWidth(0.4);
     doc.rect(M, y-3.2, 4.2, 4.2);
-    if(ULT.checks && ULT.checks[_ix]){
-      /* v1.59: marca de verificacion dibujada con lineas (sin depender de glifos) */
+    var _stP = ULT.checks ? (ULT.checks[_ix]===true?1:(ULT.checks[_ix]||0)) : 0;
+    if(_stP===1){
       doc.setLineWidth(0.7);
       doc.line(M+0.8, y-1.3, M+1.7, y-0.4);
       doc.line(M+1.7, y-0.4, M+3.5, y-2.7);
+    } else if(_stP===2){
+      doc.setDrawColor(158,42,43); doc.setLineWidth(0.7);
+      doc.line(M+0.9, y-2.6, M+3.4, y-0.4);
+      doc.line(M+3.4, y-2.6, M+0.9, y-0.4);
+      if(it.sesgo){ doc.setDrawColor(197,90,17); } else { doc.setDrawColor(31,78,121); }
     }
     doc.setLineWidth(0.2);
     // título
@@ -1390,6 +1538,15 @@ function construirPDF(){
     // SÍ / NO / N.A.
     doc.setFontSize(6.5); doc.setFont("helvetica","normal"); doc.setTextColor(90,100,110);
     doc.text("SI   NO   N.A.", W-M-16, y);
+    if(_stP){
+      var _wSI=doc.getTextWidth("SI"), _wsp=doc.getTextWidth("   "), _wNO=doc.getTextWidth("NO");
+      var _cx = _stP===1 ? (W-M-16+_wSI/2) : (_stP===2 ? (W-M-16+_wSI+_wsp+_wNO/2) : (W-M-16+_wSI+_wsp+_wNO+_wsp+doc.getTextWidth("N.A.")/2));
+      var _rx = _stP===3 ? 3.4 : 2.4;
+      if(_stP===2){ doc.setDrawColor(158,42,43); } else if(_stP===1){ doc.setDrawColor(31,120,60); } else { doc.setDrawColor(120,128,136); }
+      doc.setLineWidth(0.5); doc.ellipse(_cx, y-1.0, _rx, 1.9);
+      doc.setLineWidth(0.2);
+      if(it.sesgo){ doc.setDrawColor(197,90,17); } else { doc.setDrawColor(31,78,121); }
+    }
     y += 4.6;
     if(it.d){
       doc.setFont("helvetica","normal"); doc.setFontSize(7.6); doc.setTextColor(70,78,86);
@@ -1415,13 +1572,22 @@ function construirPDF(){
   doc.setTextColor(27,33,39); doc.setFontSize(8.2); doc.setFont("helvetica","bold");
   doc.text("¿Todos los ítems verificados en SI o N.A.?", M, y);
   doc.rect(M+62, y-3.2, 4, 4);
-  if(ULT.checks && ULT._finales && ULT._finales.length && ULT.checks.filter(Boolean).length===ULT._finales.length){
+  var _cf={si:0,no:0,na:0,sr:0};
+  if(ULT.checks && ULT._finales) ULT.checks.forEach(function(v){ if(v===1||v===true)_cf.si++; else if(v===2)_cf.no++; else if(v===3)_cf.na++; else _cf.sr++; });
+  var _todoOK = ULT._finales && ULT._finales.length && _cf.sr===0 && _cf.no===0;
+  if(_todoOK){
     doc.setDrawColor(31,120,60); doc.setLineWidth(0.7);
     doc.line(M+62.7, y-1.3, M+63.5, y-0.5); doc.line(M+63.5, y-0.5, M+65.4, y-2.8);
     doc.setLineWidth(0.2); doc.setDrawColor(150,160,170);
   }
   doc.setFont("helvetica","normal"); doc.text("SI, autorizado a iniciar", M+68, y);
-  doc.rect(M+105, y-3.2, 4, 4); doc.text("NO: DETENER y avisar al supervisor", M+111, y);
+  doc.rect(M+105, y-3.2, 4, 4);
+  if(_cf.no>0){
+    doc.setDrawColor(158,42,43); doc.setLineWidth(0.7);
+    doc.line(M+105.8, y-2.6, M+108.2, y-0.4); doc.line(M+108.2, y-2.6, M+105.8, y-0.4);
+    doc.setLineWidth(0.2); doc.setDrawColor(150,160,170);
+  }
+  doc.text("NO: DETENER y avisar al supervisor", M+111, y);
   y += 9;
   doc.line(M, y, M+70, y); doc.line(M+85, y, M+155, y); doc.line(M+168, y, W-M, y);
   doc.setFontSize(6.8); doc.setTextColor(90,100,110);
@@ -1432,6 +1598,8 @@ function construirPDF(){
   doc.text("REGLA DE ORO: si puede caer, moverse o energizarse, asume que lo hará. Fuera de la línea de fuego.", W/2, 268, {align:"center"});
   doc.setTextColor(120,120,120); doc.setFont("helvetica","normal"); doc.setFontSize(6.3);
   doc.text("Generado con FatalityCheck v"+APP_VERSION+" · Herramienta de apoyo preventivo: complementa y no reemplaza el procedimiento de trabajo seguro ni el análisis de riesgo de la tarea (ART) de tu faena.", W/2, 272, {align:"center"});
+  doc.setFont("helvetica","bold"); doc.setTextColor(31,78,121); doc.setFontSize(7);
+  doc.text("Genera tu checklist gratis en fatalitycheck.com", W/2, 275.4, {align:"center"});
 
   return doc;
 }
@@ -1516,7 +1684,16 @@ async function compartir(canal){
   const doc = construirPDF();
   const nombre = nombrePDF();
   const asunto = "Checklist de seguridad: "+ULT.tarea;
-  const cuerpo = "Adjunto la lista de chequeo de seguridad (1 pagina) para la tarea \""+ULT.tarea+"\", basada en "+ULT.casos.length+" accidentes fatales reales (1995 a la fecha).\n\nGenerado con FatalityCheck.";
+  var _resu="";
+  try{ if(ULT._finales&&ULT._finales.length&&ULT.checks){
+    var _cR={si:0,no:0,na:0,sr:0};
+    ULT.checks.forEach(function(v){ if(v===1||v===true)_cR.si++; else if(v===2)_cR.no++; else if(v===3)_cR.na++; else _cR.sr++; });
+    var _nn=ULT._finales.length;
+    if(_cR.no>0) _resu="\nEstado: \u26a0 NO INICIAR — "+_cR.no+" control(es) en NO (S\u00cd "+_cR.si+", N.A. "+_cR.na+")";
+    else if(_cR.sr===0) _resu="\nEstado: "+_nn+" de "+_nn+" ítems verificados \u2713 — AUTORIZADO A INICIAR";
+    else if(_cR.si+_cR.na>0) _resu="\nEstado: S\u00cd "+_cR.si+" · N.A. "+_cR.na+" · sin responder "+_cR.sr;
+  } }catch(e){}
+  const cuerpo = "Adjunto la lista de chequeo de seguridad (1 pagina) para la tarea \""+ULT.tarea+"\", basada en "+ULT.casos.length+" accidentes fatales reales (1995 a la fecha)."+_resu+"\n\nGenerado con FatalityCheck.";
   // App nativa Android: adjunta el PDF via hoja de compartir (sin abrirlo)
   if(_appNativa()){ try{ const ok = await entregarPDF(doc); if(ok) return; }catch(e){} }
   // Movil web: Web Share con archivo (adjunta el PDF sin abrirlo)
@@ -1771,7 +1948,7 @@ ${v}`}]
 
 
 /* ===== Segunda capa: sub-sesgos (50) — se activa cuando los casos tienen 'sub' ===== */
-const SUBSESGOS = {"NORM-1": {"p": "Normalización de la desviación", "n": "Tolerancia al riesgo aprendido", "d": "Repetir una práctica insegura sin consecuencias hasta aceptarla como normal.", "c": "Mide la desviación contra el procedimiento, no contra \"lo que siempre resulta\"."}, "NORM-2": {"p": "Normalización de la desviación", "n": "Procedimiento erosionado", "d": "El método real se aleja poco a poco del procedimiento escrito.", "c": "Verifica en terreno que lo que se hace es igual a lo que dice el PTS."}, "NORM-3": {"p": "Normalización de la desviación", "n": "Guardas o protecciones ausentes aceptadas", "d": "Operar con resguardos faltantes porque \"así se ha venido trabajando\".", "c": "No inicies si falta una guarda; se repone antes, no después."}, "NORM-4": {"p": "Normalización de la desviación", "n": "Energía residual normalizada", "d": "Convivir con fugas, presión o voltaje residual como si fueran inofensivos.", "c": "Verifica cero energía con instrumento, siempre."}, "NORM-5": {"p": "Normalización de la desviación", "n": "Atajo institucionalizado", "d": "El atajo dejó de ser excepción y es la forma estándar del equipo.", "c": "Corrige el procedimiento o el recurso faltante que originó el atajo."}, "ATAJ-1": {"p": "Atajo de menor esfuerzo", "n": "Omitir bloqueo por rapidez", "d": "Saltarse el bloqueo y etiquetado porque \"es solo un momento\".", "c": "Bloquea igual: \"es solo un momento\" es la frase que más mata."}, "ATAJ-2": {"p": "Atajo de menor esfuerzo", "n": "Herramienta o medio incorrecto a mano", "d": "Usar lo que está cerca en vez de la herramienta o el equipo correcto.", "c": "Detente y trae la herramienta o el equipo adecuado."}, "ATAJ-3": {"p": "Atajo de menor esfuerzo", "n": "Soporte improvisado", "d": "Apoyar cargas en madera, tambores o apoyos hechizos.", "c": "Solo bloqueo mecánico positivo certificado para el peso."}, "ATAJ-4": {"p": "Atajo de menor esfuerzo", "n": "Saltarse el permiso o el ART", "d": "Empezar sin permiso de trabajo o sin análisis de riesgo.", "c": "Sin permiso o ART firmado, no se inicia."}, "ATAJ-5": {"p": "Atajo de menor esfuerzo", "n": "Acceso por ruta insegura", "d": "Treparse o cruzar por donde no corresponde para ahorrar tiempo.", "c": "Usa accesos, plataformas y puntos de anclaje diseñados."}, "COMP-1": {"p": "Complacencia / rutina", "n": "Piloto automático", "d": "Ejecutar de memoria sin reevaluar el riesgo.", "c": "Haz un checklist breve antes de iniciar, cada vez."}, "COMP-2": {"p": "Complacencia / rutina", "n": "Sub-inspección por familiaridad", "d": "No revisar porque \"ya conozco esta tarea\".", "c": "Inspección formal aunque la tarea sea conocida."}, "COMP-3": {"p": "Complacencia / rutina", "n": "Tarea corta subestimada", "d": "\"Es de 5 minutos\" y se bajan los controles.", "c": "El tiempo no reduce el riesgo: mismos controles."}, "COMP-4": {"p": "Complacencia / rutina", "n": "Pérdida de percepción del peligro", "d": "Por costumbre, el riesgo deja de \"verse\".", "c": "Rota la atención y suma un segundo par de ojos."}, "COMP-5": {"p": "Complacencia / rutina", "n": "Asumir el equipo seguro sin verificar", "d": "Dar por hecho un estado seguro que no se comprobó.", "c": "Verifica la condición real: energía, bloqueo, estabilidad."}, "CONF-1": {"p": "Conformidad / presión organizacional", "n": "Presión de producción o tiempo", "d": "Apurar saltando controles por meta o cierre de turno.", "c": "La autoridad de detener prevalece sobre la meta."}, "CONF-2": {"p": "Conformidad / presión organizacional", "n": "No detener frente al grupo", "d": "Callar por no ser \"el que para el trabajo\".", "c": "Ejerce la parada segura: es un derecho y un deber, sin represalia."}, "CONF-3": {"p": "Conformidad / presión organizacional", "n": "Obediencia a instrucción insegura", "d": "Cumplir una orden riesgosa por respeto a la jerarquía.", "c": "Cuestiona y rechaza tareas inseguras; escala el problema."}, "CONF-4": {"p": "Conformidad / presión organizacional", "n": "Seguir al grupo", "d": "Imitar la práctica insegura del resto del equipo.", "c": "El estándar no lo fija la costumbre del grupo."}, "CONF-5": {"p": "Conformidad / presión organizacional", "n": "Miedo a reportar o preguntar", "d": "No avisar condiciones peligrosas ni plantear dudas.", "c": "Reporta sin culpa: preguntar es seguro."}, "OPTI-1": {"p": "Optimismo / invulnerabilidad", "n": "\"A mí no me va a pasar\"", "d": "Creerse exento del riesgo que afecta a otros.", "c": "El accidente le pasó a alguien tan capaz como tú."}, "OPTI-2": {"p": "Optimismo / invulnerabilidad", "n": "Subestimar la energía almacenada", "d": "Minimizar resortes, presión, tensión o cargas suspendidas.", "c": "Identifica y libera o asegura toda energía atrapada."}, "OPTI-3": {"p": "Optimismo / invulnerabilidad", "n": "Confiar en el final feliz", "d": "\"Alcanzo a terminar antes de que falle\".", "c": "Ante una señal de peligro, detente; no apuestes."}, "OPTI-4": {"p": "Optimismo / invulnerabilidad", "n": "Minimizar la altura o la caída", "d": "\"No es tan alto\" para justificar trabajar sin protección.", "c": "Protección contra caídas desde el primer nivel de exposición."}, "OPTI-5": {"p": "Optimismo / invulnerabilidad", "n": "Subestimar el equipo móvil", "d": "Creer que el equipo no se moverá mientras se interviene.", "c": "Aísla, acuña y bloquea antes de exponerte."}, "PERI-1": {"p": "Exceso de confianza (pericia)", "n": "Experto que se salta pasos", "d": "Usar la experiencia para justificar omitir controles.", "c": "El procedimiento aplica a todos, sin importar la pericia."}, "PERI-2": {"p": "Exceso de confianza (pericia)", "n": "Confianza en el \"ojo entrenado\"", "d": "Evaluar a la vista en lugar de medir.", "c": "Mide y verifica con instrumento; no estimes."}, "PERI-3": {"p": "Exceso de confianza (pericia)", "n": "Improvisación por habilidad", "d": "Resolver con maña en vez del método seguro.", "c": "La habilidad no reemplaza el control de energía."}, "PERI-4": {"p": "Exceso de confianza (pericia)", "n": "Sobreestimar reflejos o control físico", "d": "Creer que se reacciona a tiempo ante una liberación de energía.", "c": "Nunca te pongas en la línea de fuego confiando en reaccionar."}, "PERI-5": {"p": "Exceso de confianza (pericia)", "n": "Negar la propia fatiga o límite", "d": "Ignorar cansancio, condiciones o falta de competencia.", "c": "Reconoce la fatiga: pide relevo y toma pausas."}, "DISP-1": {"p": "Heurística de disponibilidad", "n": "\"Nunca ha pasado aquí\"", "d": "Si no se recuerda un accidente, se cree imposible.", "c": "Que no haya pasado no significa que no pase hoy."}, "DISP-2": {"p": "Heurística de disponibilidad", "n": "Juzgar por lo reciente", "d": "Sobreponderar el último evento o su ausencia.", "c": "Basa el riesgo en el peligro real, no en la memoria."}, "DISP-3": {"p": "Heurística de disponibilidad", "n": "Ignorar el casi-accidente", "d": "No aprender de incidentes que no dejaron lesión.", "c": "Trata cada casi-accidente como un aviso serio."}, "DISP-4": {"p": "Heurística de disponibilidad", "n": "Descartar el riesgo invisible", "d": "Lo que no se ve (gas, energía) se asume ausente.", "c": "Mide atmósferas y energías aunque \"no se noten\"."}, "DISP-5": {"p": "Heurística de disponibilidad", "n": "Subestimar el evento raro y grave", "d": "Descartar lo improbable de alta consecuencia.", "c": "Planifica para la falla de peor consecuencia."}, "TUNE-1": {"p": "Visión de túnel / atención selectiva", "n": "Foco en la falla, ciego al entorno", "d": "Concentrarse en el problema y perder el contexto.", "c": "Haz una pausa para escanear el entorno: tránsito, energía, caída."}, "TUNE-2": {"p": "Visión de túnel / atención selectiva", "n": "Perder de vista el tránsito de equipos", "d": "Quedar absorto en la tarea cerca de equipos móviles.", "c": "Zona de exclusión y contacto visual con los operadores."}, "TUNE-3": {"p": "Visión de túnel / atención selectiva", "n": "Olvidar la energía adyacente", "d": "Atender un punto y olvidar el circuito o la línea cercana.", "c": "Bloquea todas las fuentes, no solo la principal."}, "TUNE-4": {"p": "Visión de túnel / atención selectiva", "n": "Estrechamiento por estrés o urgencia", "d": "La presión reduce el campo de atención.", "c": "Baja el ritmo: la urgencia agranda el error."}, "TUNE-5": {"p": "Visión de túnel / atención selectiva", "n": "Fijación en un solo indicador", "d": "Confiar en una única señal o lectura.", "c": "Verificación cruzada con un segundo método."}, "CTRL-1": {"p": "Ilusión de control", "n": "Creer dominado un proceso inestable", "d": "Material colgado, presión o flujo que se asume controlado.", "c": "Trata lo inestable como impredecible: exclusión y distancia."}, "CTRL-2": {"p": "Ilusión de control", "n": "Controlar la carga con el cuerpo", "d": "Guiar o sostener una carga suspendida a mano.", "c": "Usa vientos (cuerdas) y nadie debajo de la carga."}, "CTRL-3": {"p": "Ilusión de control", "n": "Sobrestimar el control del vehículo o equipo", "d": "En pendiente, barro o borde, confiar en \"maniobrar\".", "c": "Respeta límites, bermas y velocidad; no apuestes a la maniobra."}, "CTRL-4": {"p": "Ilusión de control", "n": "Creer reversible lo irreversible", "d": "Pensar que se alcanza a corregir una liberación de energía.", "c": "Asume que, una vez iniciada, la energía no se detiene."}, "CTRL-5": {"p": "Ilusión de control", "n": "Confiar en controles informales", "d": "Acuerdos verbales en lugar de bloqueo físico.", "c": "Control físico positivo, no la coordinación verbal."}, "META-1": {"p": "Fijación en la meta / continuidad del plan", "n": "Terminar el turno pese a las señales", "d": "Seguir adelante para cerrar la jornada.", "c": "La señal de peligro manda sobre el horario."}, "META-2": {"p": "Fijación en la meta / continuidad del plan", "n": "Continuar el plan ante condiciones cambiadas", "d": "No replanificar cuando el escenario cambia.", "c": "Re-evalúa el ART si cambian las condiciones."}, "META-3": {"p": "Fijación en la meta / continuidad del plan", "n": "Compromiso con lo ya empezado", "d": "\"Ya casi termino\": el costo hundido empuja a seguir.", "c": "Detener vale más que terminar: reinicia de forma segura."}, "META-4": {"p": "Fijación en la meta / continuidad del plan", "n": "Cerrar la pendiente a toda costa", "d": "Completar la lista aunque falten controles.", "c": "Ningún control se omite por avanzar."}, "META-5": {"p": "Fijación en la meta / continuidad del plan", "n": "Presión de cumplimiento de programa", "d": "El cronograma empuja por sobre la seguridad.", "c": "El programa se ajusta; la exposición no se negocia."}};
+const SUBSESGOS = {"NORM-1": {"p": "Normalización de la desviación", "n": "Tolerancia al riesgo aprendido", "d": "Repetir una práctica insegura sin consecuencias hasta aceptarla como normal.", "c": "Mido la desviación contra el procedimiento, no contra \"lo que siempre resulta\"."}, "NORM-2": {"p": "Normalización de la desviación", "n": "Procedimiento erosionado", "d": "El método real se aleja poco a poco del procedimiento escrito.", "c": "Verifico en terreno que lo que se hace es igual a lo que dice el PTS."}, "NORM-3": {"p": "Normalización de la desviación", "n": "Guardas o protecciones ausentes aceptadas", "d": "Operar con resguardos faltantes porque \"así se ha venido trabajando\".", "c": "No inicio si falta una guarda; se repone antes, no después."}, "NORM-4": {"p": "Normalización de la desviación", "n": "Energía residual normalizada", "d": "Convivir con fugas, presión o voltaje residual como si fueran inofensivos.", "c": "Verifico cero energía con instrumento, siempre."}, "NORM-5": {"p": "Normalización de la desviación", "n": "Atajo institucionalizado", "d": "El atajo dejó de ser excepción y es la forma estándar del equipo.", "c": "Corrijo el procedimiento o el recurso faltante que originó el atajo."}, "ATAJ-1": {"p": "Atajo de menor esfuerzo", "n": "Omitir bloqueo por rapidez", "d": "Saltarse el bloqueo y etiquetado porque \"es solo un momento\".", "c": "Bloqueo igual: \"es solo un momento\" es la frase que más mata."}, "ATAJ-2": {"p": "Atajo de menor esfuerzo", "n": "Herramienta o medio incorrecto a mano", "d": "Usar lo que está cerca en vez de la herramienta o el equipo correcto.", "c": "Me detengo y traigo la herramienta o el equipo adecuado."}, "ATAJ-3": {"p": "Atajo de menor esfuerzo", "n": "Soporte improvisado", "d": "Apoyar cargas en madera, tambores o apoyos hechizos.", "c": "Uso solo bloqueo mecánico positivo certificado para el peso."}, "ATAJ-4": {"p": "Atajo de menor esfuerzo", "n": "Saltarse el permiso o el ART", "d": "Empezar sin permiso de trabajo o sin análisis de riesgo.", "c": "Sin permiso o ART firmado, no inicio."}, "ATAJ-5": {"p": "Atajo de menor esfuerzo", "n": "Acceso por ruta insegura", "d": "Treparse o cruzar por donde no corresponde para ahorrar tiempo.", "c": "Uso accesos, plataformas y puntos de anclaje diseñados."}, "COMP-1": {"p": "Complacencia / rutina", "n": "Piloto automático", "d": "Ejecutar de memoria sin reevaluar el riesgo.", "c": "Hago un checklist breve antes de iniciar, cada vez."}, "COMP-2": {"p": "Complacencia / rutina", "n": "Sub-inspección por familiaridad", "d": "No revisar porque \"ya conozco esta tarea\".", "c": "Hago inspección formal aunque la tarea sea conocida."}, "COMP-3": {"p": "Complacencia / rutina", "n": "Tarea corta subestimada", "d": "\"Es de 5 minutos\" y se bajan los controles.", "c": "El tiempo no reduce el riesgo: mismos controles."}, "COMP-4": {"p": "Complacencia / rutina", "n": "Pérdida de percepción del peligro", "d": "Por costumbre, el riesgo deja de \"verse\".", "c": "Roto la atención y sumo un segundo par de ojos."}, "COMP-5": {"p": "Complacencia / rutina", "n": "Asumir el equipo seguro sin verificar", "d": "Dar por hecho un estado seguro que no se comprobó.", "c": "Verifico la condición real: energía, bloqueo, estabilidad."}, "CONF-1": {"p": "Conformidad / presión organizacional", "n": "Presión de producción o tiempo", "d": "Apurar saltando controles por meta o cierre de turno.", "c": "La autoridad de detener prevalece sobre la meta."}, "CONF-2": {"p": "Conformidad / presión organizacional", "n": "No detener frente al grupo", "d": "Callar por no ser \"el que para el trabajo\".", "c": "Ejerzo la parada segura: es un derecho y un deber, sin represalia."}, "CONF-3": {"p": "Conformidad / presión organizacional", "n": "Obediencia a instrucción insegura", "d": "Cumplir una orden riesgosa por respeto a la jerarquía.", "c": "Cuestiono y rechazo tareas inseguras; escalo el problema."}, "CONF-4": {"p": "Conformidad / presión organizacional", "n": "Seguir al grupo", "d": "Imitar la práctica insegura del resto del equipo.", "c": "El estándar no lo fija la costumbre del grupo."}, "CONF-5": {"p": "Conformidad / presión organizacional", "n": "Miedo a reportar o preguntar", "d": "No avisar condiciones peligrosas ni plantear dudas.", "c": "Reporto sin culpa: preguntar es seguro."}, "OPTI-1": {"p": "Optimismo / invulnerabilidad", "n": "\"A mí no me va a pasar\"", "d": "Creerse exento del riesgo que afecta a otros.", "c": "El accidente le pasó a alguien tan capaz como yo."}, "OPTI-2": {"p": "Optimismo / invulnerabilidad", "n": "Subestimar la energía almacenada", "d": "Minimizar resortes, presión, tensión o cargas suspendidas.", "c": "Identifico y libero o aseguro toda energía atrapada."}, "OPTI-3": {"p": "Optimismo / invulnerabilidad", "n": "Confiar en el final feliz", "d": "\"Alcanzo a terminar antes de que falle\".", "c": "Ante una señal de peligro, me detengo; no apuesto."}, "OPTI-4": {"p": "Optimismo / invulnerabilidad", "n": "Minimizar la altura o la caída", "d": "\"No es tan alto\" para justificar trabajar sin protección.", "c": "Uso protección contra caídas desde el primer nivel de exposición."}, "OPTI-5": {"p": "Optimismo / invulnerabilidad", "n": "Subestimar el equipo móvil", "d": "Creer que el equipo no se moverá mientras se interviene.", "c": "Aíslo, acuño y bloqueo antes de exponerme."}, "PERI-1": {"p": "Exceso de confianza (pericia)", "n": "Experto que se salta pasos", "d": "Usar la experiencia para justificar omitir controles.", "c": "El procedimiento me aplica igual, sin importar la pericia."}, "PERI-2": {"p": "Exceso de confianza (pericia)", "n": "Confianza en el \"ojo entrenado\"", "d": "Evaluar a la vista en lugar de medir.", "c": "Mido y verifico con instrumento; no estimo."}, "PERI-3": {"p": "Exceso de confianza (pericia)", "n": "Improvisación por habilidad", "d": "Resolver con maña en vez del método seguro.", "c": "La habilidad no reemplaza el control de energía."}, "PERI-4": {"p": "Exceso de confianza (pericia)", "n": "Sobreestimar reflejos o control físico", "d": "Creer que se reacciona a tiempo ante una liberación de energía.", "c": "Nunca me pongo en la línea de fuego confiando en reaccionar."}, "PERI-5": {"p": "Exceso de confianza (pericia)", "n": "Negar la propia fatiga o límite", "d": "Ignorar cansancio, condiciones o falta de competencia.", "c": "Reconozco la fatiga: pido relevo y tomo pausas."}, "DISP-1": {"p": "Heurística de disponibilidad", "n": "\"Nunca ha pasado aquí\"", "d": "Si no se recuerda un accidente, se cree imposible.", "c": "Que no haya pasado no significa que no pase hoy."}, "DISP-2": {"p": "Heurística de disponibilidad", "n": "Juzgar por lo reciente", "d": "Sobreponderar el último evento o su ausencia.", "c": "Baso el riesgo en el peligro real, no en la memoria."}, "DISP-3": {"p": "Heurística de disponibilidad", "n": "Ignorar el casi-accidente", "d": "No aprender de incidentes que no dejaron lesión.", "c": "Trato cada casi-accidente como un aviso serio."}, "DISP-4": {"p": "Heurística de disponibilidad", "n": "Descartar el riesgo invisible", "d": "Lo que no se ve (gas, energía) se asume ausente.", "c": "Mido atmósferas y energías aunque \"no se noten\"."}, "DISP-5": {"p": "Heurística de disponibilidad", "n": "Subestimar el evento raro y grave", "d": "Descartar lo improbable de alta consecuencia.", "c": "Planifico para la falla de peor consecuencia."}, "TUNE-1": {"p": "Visión de túnel / atención selectiva", "n": "Foco en la falla, ciego al entorno", "d": "Concentrarse en el problema y perder el contexto.", "c": "Hago una pausa para escanear el entorno: tránsito, energía, caída."}, "TUNE-2": {"p": "Visión de túnel / atención selectiva", "n": "Perder de vista el tránsito de equipos", "d": "Quedar absorto en la tarea cerca de equipos móviles.", "c": "Mantengo zona de exclusión y contacto visual con los operadores."}, "TUNE-3": {"p": "Visión de túnel / atención selectiva", "n": "Olvidar la energía adyacente", "d": "Atender un punto y olvidar el circuito o la línea cercana.", "c": "Bloqueo todas las fuentes, no solo la principal."}, "TUNE-4": {"p": "Visión de túnel / atención selectiva", "n": "Estrechamiento por estrés o urgencia", "d": "La presión reduce el campo de atención.", "c": "Bajo el ritmo: la urgencia agranda el error."}, "TUNE-5": {"p": "Visión de túnel / atención selectiva", "n": "Fijación en un solo indicador", "d": "Confiar en una única señal o lectura.", "c": "Hago verificación cruzada con un segundo método."}, "CTRL-1": {"p": "Ilusión de control", "n": "Creer dominado un proceso inestable", "d": "Material colgado, presión o flujo que se asume controlado.", "c": "Trato lo inestable como impredecible: exclusión y distancia."}, "CTRL-2": {"p": "Ilusión de control", "n": "Controlar la carga con el cuerpo", "d": "Guiar o sostener una carga suspendida a mano.", "c": "Uso vientos (cuerdas); nadie va debajo de la carga."}, "CTRL-3": {"p": "Ilusión de control", "n": "Sobrestimar el control del vehículo o equipo", "d": "En pendiente, barro o borde, confiar en \"maniobrar\".", "c": "Respeto límites, bermas y velocidad; no apuesto a la maniobra."}, "CTRL-4": {"p": "Ilusión de control", "n": "Creer reversible lo irreversible", "d": "Pensar que se alcanza a corregir una liberación de energía.", "c": "Asumo que, una vez iniciada, la energía no se detiene."}, "CTRL-5": {"p": "Ilusión de control", "n": "Confiar en controles informales", "d": "Acuerdos verbales en lugar de bloqueo físico.", "c": "Exijo control físico positivo, no la coordinación verbal."}, "META-1": {"p": "Fijación en la meta / continuidad del plan", "n": "Terminar el turno pese a las señales", "d": "Seguir adelante para cerrar la jornada.", "c": "La señal de peligro manda sobre el horario."}, "META-2": {"p": "Fijación en la meta / continuidad del plan", "n": "Continuar el plan ante condiciones cambiadas", "d": "No replanificar cuando el escenario cambia.", "c": "Re-evalúo el ART si cambian las condiciones."}, "META-3": {"p": "Fijación en la meta / continuidad del plan", "n": "Compromiso con lo ya empezado", "d": "\"Ya casi termino\": el costo hundido empuja a seguir.", "c": "Detener vale más que terminar: reinicio de forma segura."}, "META-4": {"p": "Fijación en la meta / continuidad del plan", "n": "Cerrar la pendiente a toda costa", "d": "Completar la lista aunque falten controles.", "c": "No omito ningún control por avanzar."}, "META-5": {"p": "Fijación en la meta / continuidad del plan", "n": "Presión de cumplimiento de programa", "d": "El cronograma empuja por sobre la seguridad.", "c": "El programa se ajusta; la exposición no se negocia."}};
 // frecuencia global de cada sub-sesgo en todo el corpus (línea base para sobre-representación)
 const _SUBGLOBAL = (function(){ const f={}; CASOS.forEach(c=> (c.sub||[]).forEach(id=> f[id]=(f[id]||0)+1)); return f; })();
 const _SUBNALL = Math.max(1, CASOS.length);
@@ -1807,15 +1984,15 @@ const SESGOS_DESC = {
  "Exceso de confianza (pericia)":"Los años de experiencia se usan como justificación para omitir controles: \u201cllevo 30 años haciendo esto\u201d."
 };
 const SESGOS_INFO = {
- "Normalización de la desviación":"Lo de siempre no es lo seguro: compárate contra el procedimiento, no contra la costumbre.",
- "Complacencia / rutina":"Tarea repetida = máxima atención. Haz la pausa de 10 segundos antes de empezar.",
- "Conformidad / presión organizacional":"Si el entorno empuja a saltarse el control, detén la tarea y escala.",
- "Optimismo / invulnerabilidad":"Las víctimas tampoco creían que les pasaría: usa el EPP y no trabajes solo.",
- "Atajo de menor esfuerzo":"\u201cEs solo un momento\u201d es la frase que más mata: bloquea igual.",
- "Fijación en la meta / continuidad del plan":"Terminar la tarea no vale tu vida: la señal de peligro manda.",
+ "Normalización de la desviación":"Lo de siempre no es lo seguro: me comparo contra el procedimiento, no contra la costumbre.",
+ "Complacencia / rutina":"Tarea repetida = máxima atención. Hago la pausa de 10 segundos antes de empezar.",
+ "Conformidad / presión organizacional":"Si el entorno empuja a saltarse el control, detengo la tarea y escalo.",
+ "Optimismo / invulnerabilidad":"Las víctimas tampoco creían que les pasaría: uso el EPP y no trabajo solo.",
+ "Atajo de menor esfuerzo":"\u201cEs solo un momento\u201d es la frase que más mata: bloqueo igual.",
+ "Fijación en la meta / continuidad del plan":"Terminar la tarea no vale mi vida: la señal de peligro manda.",
  "Heurística de disponibilidad":"Que nunca haya pasado no significa que no pase hoy.",
- "Visión de túnel / atención selectiva":"Levanta la vista: ubica equipos y personas antes de moverte.",
- "Ilusión de control":"No puedes dominar una máquina o una carga en movimiento.",
+ "Visión de túnel / atención selectiva":"Levanto la vista: ubico equipos y personas antes de moverme.",
+ "Ilusión de control":"No puedo dominar una máquina o una carga en movimiento.",
  "Exceso de confianza (pericia)":"La experiencia no detiene un camión ni sostiene una tolva."
 };
 function topSesgos(casos, n){
@@ -1987,6 +2164,7 @@ async function analizar(commit){
   if(!tarea){ estado.textContent="Describe primero la tarea que vas a ejecutar."; ULT=null; try{var _a=document.getElementById("tareaCanon"); if(_a)_a.innerHTML="";}catch(e){} try{var _b=document.getElementById("tareasSim"); if(_b)_b.innerHTML="";}catch(e){} try{var _c=document.getElementById("acciones"); if(_c)_c.classList.remove("visible");}catch(e){} res.innerHTML=""; return; }
   try{ revisarCaja(); }catch(e){}
   res.innerHTML=""; btn.disabled=true;
+  try{ var _zx=document.getElementById("chkzone"); if(_zx) _zx.innerHTML=""; }catch(e){}
   estado.textContent="Analizando contra el 100% de la base: 1.647 fatalidades (1995 a la fecha)…";
 
   let cats = puntuarCategorias(tarea);
@@ -2095,6 +2273,7 @@ Entrega 3 a 5 tips específicos para la tarea (no genéricos), en español de Ch
 /* ===== v1.37 - Invitacion a prueba piloto =====
    Se inyecta SOLO fuera de la app nativa: en Android no aparece.
    El enlace se arma en JS, asi no queda como recurso externo en el HTML. */
+(function(){ try{ renderHistLink(); }catch(e){} })();
 /* Precalienta el indice BM25 cuando el navegador esta ocioso, para que la
    primera consulta no pague los ~130 ms de construccion. */
 (function(){
