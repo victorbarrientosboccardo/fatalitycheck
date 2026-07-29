@@ -34,7 +34,8 @@
     background:repeating-linear-gradient(135deg, var(--amarillo) 0 9px, #1A1305 9px 18px);
     opacity:.9;
   }
-  header{padding:46px 22px 14px; max-width:900px; margin:0 auto;}
+  header{padding:46px 22px 14px; max-width:900px; margin:0 auto; position:relative;}
+  .ver-badge{position:absolute; top:16px; right:22px; font-size:12.5px; color:#9fb4c7; border:1px solid #2a3340; border-radius:999px; padding:4px 11px; letter-spacing:.03em;}
   /* ===== Piloto: invitacion WhatsApp, solo sitio web (v1.37) ===== */
   .piloto{display:none; margin-top:30px;}
   .piloto-caja{display:flex; align-items:center; justify-content:space-between;
@@ -183,6 +184,12 @@
   .chk-na{background:#1a1f26;border-color:#3a434e;opacity:.85}
   .chk-na .chk-box{border-color:#7f8b97;color:#9fb4c7;font-size:9px}
   .hist-no{color:#e0565a}
+  .chk-ops{flex:none;display:flex;gap:5px;margin-left:auto;padding-left:8px}
+  .chk-op{min-width:42px;padding:9px 6px;border-radius:7px;border:1.5px solid #3a434e;background:#10161d;color:#9fb4c7;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit}
+  .op-si.op-act{background:#0e2a1a;border-color:#38d66b;color:#38d66b}
+  .op-no.op-act{background:#2a1113;border-color:#e0565a;color:#e0565a}
+  .op-na.op-act{background:#232a33;border-color:#9fb4c7;color:#dbe4ec}
+  @media (max-width:520px){ .chk-item{flex-wrap:wrap} .chk-ops{margin-left:32px;padding-top:6px;width:100%} .chk-op{flex:1} }
   .chk-box{flex:none;width:22px;height:22px;border:2px solid #5a6672;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#38d66b;margin-top:1px}
   .chk-on .chk-box{border-color:#38d66b}
   .chk-txt{font-size:13.5px;line-height:1.35;color:#e8eef4}
@@ -620,6 +627,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
 <body>
 <div class="cinta" aria-hidden="true"></div>
 <header>
+  <span class="ver-badge">v<span id="appVerEye">1.72</span></span>
   <div class="marca">
     <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="13" role="img" aria-label="FatalityCheck">
       <path d="M15 15 49 49" opacity=".5"/>
@@ -627,9 +635,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
     </svg>
     <span class="marca-nom">Fatality<b>Check</b></span>
   </div>
-  <div class="eyebrow">v<span id="appVerEye">1.68</span> &middot; 1.647 fatalidades reales &middot; 1995 a hoy</div>
   <h1>¿Qué tarea vas a ejecutar <span>hoy</span>?</h1>
-  <div id="hallazgo" style="margin:10px auto 0;max-width:680px;padding:9px 14px;border:1px solid #3a4450;border-left:3px solid #FFC918;border-radius:10px;background:#171E26;color:#ECEAE4;font-size:13.5px;line-height:1.45;text-align:left;display:none"></div>
   <p class="sub">Describe tu tarea y obtén los controles críticos y sesgos cognitivos. <b>No seguir estos consejos le costó la vida a alguien.</b></p>
 </header>
 <main>
@@ -658,7 +664,7 @@ function(t){t.__bidiEngine__=t.prototype.__bidiEngine__=function(t){var r,n,i,a,
   <div class="piloto" id="piloto"></div>
 </main>
 <footer>
-  FatalityCheck v<span id="appVer">1.68</span> © · Fuente: informes finales de investigación de accidentes fatales en minería (superficie y subterránea), MSHA (U.S. Dept. of Labor). Cubre el 100% de la base analizada: 1.647 fatalidades, 1995 a la fecha. Esta herramienta es de apoyo preventivo y no reemplaza el procedimiento de trabajo seguro, el ART ni el reglamento interno de tu faena.
+  FatalityCheck v<span id="appVer">1.72</span> © · Fuente: informes finales de investigación de accidentes fatales en minería (superficie y subterránea), MSHA (U.S. Dept. of Labor). Cubre el 100% de la base analizada: 1.647 fatalidades, 1995 a la fecha. Esta herramienta es de apoyo preventivo y no reemplaza el procedimiento de trabajo seguro, el ART ni el reglamento interno de tu faena.
 </footer>
 
 <script>
@@ -811,34 +817,9 @@ for(const k in CATS){
 }
 
 /* ===== Versión de la aplicación (se incrementa en cada nueva versión) ===== */
-const APP_VERSION = "1.68";
+const APP_VERSION = "1.72";
 const OFFLINE = true;   // build para Google Play: sin llamadas a la API (100% offline)
 
-/* ===== Banner de hallazgos del corpus (v1.50) =====
-   Correlaciones verificadas en la auditoria del 29-07-2026 (informe
-   Correlaciones_corpus.md). Rota una por dia segun la fecha del dispositivo;
-   el lunes muestra siempre el efecto lunes. Solo cifras con base declarada. */
-const HALLAZGOS=[
- "El 25% de las fatalidades con hora registrada ocurrió entre las 6:00 y las 7:59 de la mañana: 371 muertes en solo 2 de las 24 horas (n=1.473).",
- "El 46% de las fatalidades por trabajo en caliente ocurrió un día lunes (37 de 81 casos), más del doble de lo esperado.",
- "El 28,6% de las víctimas llevaba menos de 1 año en el trabajo (263 de 920 con dato). En conducción y caminos sube al 36%.",
- "En chancadores, 1 de cada 3 accidentes fatales tuvo un defecto mecánico contribuyente (82 de 219): el estado del equipo es parte del control.",
- "El personal contratista concentra el doble de fatalidades en trabajo en altura (21%) y conducción (20%) que su tasa global (11,8%).",
- "En tronadura, la barrera que habría evitado el accidente NO EXISTÍA en el 89% de los casos con dato (97 de 109).",
- "173 víctimas (10,5%) tenían cargo de supervisión: capataces, jefes de turno, jefes de planta. El cargo no protege.",
- "Las muertes por tránsito y caminos pesan la mitad desde 2010; lo que sube es la mantención: bajo equipo levantado, trabajo en caliente y altura.",
- "El 43% de las fatalidades en tronadura ocurrió un día lunes (47 de 110 casos).",
- "En trabajos eléctricos, el 87% de las fatalidades muestra sesgo de atajo: no verificar cero energía \"por esta pura vez\" (84 de 97 casos)."];
-(function(){
-  try{
-    var el=document.getElementById("hallazgo"); if(!el) return;
-    var d=new Date();
-    var dia=Math.floor((d - new Date(d.getFullYear(),0,0))/86400000);
-    var i = (d.getDay()===1) ? 1 : (dia % HALLAZGOS.length);
-    el.innerHTML="<b style=\"color:#FFC918\">Dato del corpus:</b> "+HALLAZGOS[i];
-    el.style.display="block";
-  }catch(e){}
-})();
 (function(){["appVer","appVerEye"].forEach(id=>{const _v=document.getElementById(id); if(_v)_v.textContent=APP_VERSION;});})();
 
 /* ===== Motivo por el que cada categoría hace aplicable un artículo del DS 132 ===== */
@@ -1122,7 +1103,7 @@ function renderChecklistPantalla(){
   var cont=document.getElementById("chkzone")||document.getElementById("res"); if(!cont||!ULT||!ULT._finales) return;
   var F=ULT._finales, C=ULT.checks||[];
   var D=_datosLeer();
-  var h='<div class="chk-cab">Checklist en pantalla. Cada toque alterna: SÍ \u2713 \u2192 NO \u2715 \u2192 N.A. El PDF saldrá con tus respuestas.</div>';
+  var h='<div class="chk-cab">Checklist en pantalla: responde cada ítem con SÍ, NO o N.A. El PDF saldrá con tus respuestas.</div>';
   h+='<div class="chk-datos"><div class="chk-datos-t">Datos del documento (opcionales; fecha y hora se completan solas)</div>'
     +'<input id="fEj" placeholder="Ejecutor" value="'+_escAttr(D.ej)+'" onchange="_datosGuardar()">'
     +'<input id="fSup" placeholder="Supervisor" value="'+_escAttr(D.sup)+'" onchange="_datosGuardar()">'
@@ -1136,10 +1117,15 @@ function renderChecklistPantalla(){
     var _st=C[i]===true?1:(C[i]||0);
     var _cl=_st===1?' chk-on':(_st===2?' chk-no':(_st===3?' chk-na':''));
     var _bx=_st===1?'\u2713':(_st===2?'\u2715':(_st===3?'<small>N.A.</small>':''));
-    h+='<div class="chk-item'+_cl+'" onclick="toggleChk('+i+')">'
+    h+='<div class="chk-item'+_cl+'">'
       +'<span class="chk-box">'+_bx+'</span>'
       +'<span class="chk-txt"><b>'+(it.sesgo?'A':'B')+num+'. '+_escChk(it.t)+'</b>'
       +(it.d?'<small>'+_escChk(it.d)+'</small>':'')
+      +'</span>'
+      +'<span class="chk-ops">'
+        +'<button type="button" class="chk-op op-si'+(_st===1?' op-act':'')+'" onclick="setChk('+i+',1)">S\u00cd</button>'
+        +'<button type="button" class="chk-op op-no'+(_st===2?' op-act':'')+'" onclick="setChk('+i+',2)">NO</button>'
+        +'<button type="button" class="chk-op op-na'+(_st===3?' op-act':'')+'" onclick="setChk('+i+',3)">N.A.</button>'
       +'</span></div>';
     num++;
   });
@@ -1154,11 +1140,21 @@ function _chkCuenta(){
   (ULT&&ULT.checks||[]).forEach(function(v){ if(v===1||v===true)c.si++; else if(v===2)c.no++; else if(v===3)c.na++; else c.sr++; });
   return c;
 }
+function setChk(i,val){
+  if(!ULT||!ULT.checks) return;
+  try{ _datosGuardar(); }catch(e){}
+  var v=ULT.checks[i]; if(v===true)v=1; if(!v)v=0;
+  ULT.checks[i]=(v===val?0:val);
+  _chkAviso(); return;
+}
 function toggleChk(i){
   if(!ULT||!ULT.checks) return;
   try{ _datosGuardar(); }catch(e){}
   var v=ULT.checks[i]; if(v===true)v=1; if(!v)v=0;
   ULT.checks[i]=(v+1)%4;
+  _chkAviso(); return;
+}
+function _chkAviso(){
   renderChecklistPantalla();
   try{
     var c=_chkCuenta(), n=ULT._finales.length;
@@ -1360,63 +1356,10 @@ function construirPDF(){
   y += 6.5;
   campo(M, 92, "Supervisor:", _dz("fSup")); campo(110, 60, "Área/Sector:", _dz("fArea")); campo(175, W-M-175+27, "Hora:", _hraA);
 
-  // ===== Estadística de contexto =====
-  y += 6;
-  const n = ULT.casos.length;
-  if(n){
-    const ttD = ULT.casos.filter(c=>c.tt==="Sí"||c.tt==="No");
-    const sinTT = ttD.filter(c=>c.tt==="No").length;
-    const eppNo = ULT.casos.filter(c=>c.epp).length;
-    /* v1.60: se elimina el conteo agregado de muertes (aprobado por el autor).
-       La linea queda con las estadisticas de capacitacion y EPP. */
-    let s = "";
-    if(ttD.length&&sinTT) s += "Sin capacitación en "+sinTT+" de "+ttD.length+" casos con dato";
-    if(eppNo) s += (s?" · sin":"Sin")+" EPP crítico en "+eppNo+" casos";
-
-    // Jerarquia de control que habria evitado el accidente, segun la
-    // clasificacion del propio informe MSHA. Va en su propia linea: sumada al
-    // renglon de estadisticas se pasaba del ancho y se cortaba.
-    var _jerTxt = "";
-    try{
-      const _j={};
-      for(const _c of ULT.casos){ const _v=val(_c,"jer"); if(_v) _j[_v]=(_j[_v]||0)+1; }
-      const _o=Object.entries(_j).sort((a,b)=>b[1]-a[1]);
-      if(_o.length){
-        const _tot=_o.reduce((t,e)=>t+e[1],0);
-        _jerTxt = "Jerarquía de control que lo habría evitado: " + _o[0][0] +
-                  " en " + Math.round(_o[0][1]/_tot*100) + "% de estos casos (clasificación MSHA).";
-      }
-    }catch(e){}
-    /* Advertencia de lunes (v1.49, aprobada por el autor). El corpus muestra
-       que el trabajo en caliente concentra el 46% de sus fatalidades en dia
-       lunes (37/81) y la tronadura el 43% (47/110), mas del doble de lo
-       esperado (19,9%). La app conoce la fecha del dispositivo: la advertencia
-       aparece SOLO los lunes y SOLO en esas dos categorias. */
-    var _lunTxt = "";
-    try{
-      if(new Date().getDay()===1){
-        if(ULT.cats.includes("caliente"))
-          _lunTxt = "Hoy es lunes: el 46% de las fatalidades por trabajo en caliente de este corpus ocurrió un día lunes (37 de 81 casos).";
-        else if(ULT.cats.includes("tronadura"))
-          _lunTxt = "Hoy es lunes: el 43% de las fatalidades en tronadura de este corpus ocurrió un día lunes (47 de 110 casos).";
-      }
-    }catch(e){}
-    doc.setFillColor(252,235,234); doc.setDrawColor(224,82,77);
-    doc.roundedRect(M, y-3.5, W-2*M, 6.5+(_jerTxt?4:0)+(_lunTxt?4:0), 1,1,"FD");
-    doc.setTextColor(158,42,43); doc.setFontSize(8); doc.setFont("helvetica","bold");
-    doc.text(doc.splitTextToSize(s, W-2*M-6).slice(0,1), M+3, y+0.5);
-    if(_jerTxt){
-      doc.setFont("helvetica","normal"); doc.setFontSize(7.4); doc.setTextColor(120,52,52);
-      doc.text(doc.splitTextToSize(_jerTxt, W-2*M-6).slice(0,1), M+3, y+4.6);
-      y += 4;
-    }
-    if(_lunTxt){
-      doc.setFont("helvetica","bold"); doc.setFontSize(7.4); doc.setTextColor(158,42,43);
-      doc.text(doc.splitTextToSize(_lunTxt, W-2*M-6).slice(0,1), M+3, y+4.6);
-      y += 4;
-    }
-    y += 8;
-  }
+  /* v1.71: la caja de estadisticas (capacitacion/EPP, jerarquia y advertencia
+     de lunes) se elimina del PDF a peticion del autor. El espacio queda
+     disponible para mas controles. */
+  y += 2;
 
   // ===== Construir ítems de verificación (máx para 1 página) =====
   const items = [];
@@ -1597,9 +1540,11 @@ function construirPDF(){
   doc.setTextColor(158,42,43); doc.setFont("helvetica","bold"); doc.setFontSize(8);
   doc.text("REGLA DE ORO: si puede caer, moverse o energizarse, asume que lo hará. Fuera de la línea de fuego.", W/2, 268, {align:"center"});
   doc.setTextColor(120,120,120); doc.setFont("helvetica","normal"); doc.setFontSize(6.3);
-  doc.text("Generado con FatalityCheck v"+APP_VERSION+" · Herramienta de apoyo preventivo: complementa y no reemplaza el procedimiento de trabajo seguro ni el análisis de riesgo de la tarea (ART) de tu faena.", W/2, 272, {align:"center"});
-  doc.setFont("helvetica","bold"); doc.setTextColor(31,78,121); doc.setFontSize(7);
-  doc.text("Genera tu checklist gratis en fatalitycheck.com", W/2, 275.4, {align:"center"});
+  /* v1.72: pie en dos lineas, ambas DENTRO del marco (el borde cierra en y=274).
+     La URL completa va junto a la version, como pidio el autor. */
+  doc.text("Generado con FatalityCheck v"+APP_VERSION+" · https://fatalitycheck.com", W/2, 271.2, {align:"center"});
+  doc.setFontSize(5.9);
+  doc.text("Herramienta de apoyo preventivo: complementa y no reemplaza el procedimiento de trabajo seguro ni el análisis de riesgo de la tarea (ART) de tu faena.", W/2, 273.3, {align:"center"});
 
   return doc;
 }
@@ -1896,7 +1841,7 @@ function renderTareasSim(texto){
 }
 function usarTareaSim(txt){ const ta=document.getElementById("tarea"); ta.value=txt; analizar(true); }
 let _revT;
-function _dispararRevision(){ try{ var _ta=document.getElementById("tarea"); if(ULT && _ta && ULT.tarea!==_ta.value.trim()){ ULT.vigente=false; ULT.seleccionada=false; var _ac=document.getElementById("acciones"); if(_ac)_ac.classList.remove("visible"); var _tcn=document.getElementById("tareaCanon"); if(_tcn)_tcn.innerHTML=""; var _bp=document.getElementById("btnPDF"); if(_bp){_bp.innerHTML="⬇ Descargar checklist PDF"; _bp.disabled=true;} var _be=document.getElementById("btnEmail"); if(_be)_be.disabled=true; var _bw=document.getElementById("btnWhatsapp"); if(_bw)_bw.disabled=true; _btnVerde(false); } }catch(e){} clearTimeout(_revT);_revT=setTimeout(revisarCaja,200);}
+function _dispararRevision(){ try{ var _ta=document.getElementById("tarea"); if(ULT && _ta && ULT.tarea!==_ta.value.trim()){ ULT.vigente=false; ULT.seleccionada=false; ULT.checksListo=false; ULT.checks=null; try{ var _zc=document.getElementById("chkzone"); if(_zc) _zc.innerHTML=""; }catch(e){} try{ var _ez=document.getElementById("estado"); if(_ez) _ez.textContent=""; }catch(e){} var _ac=document.getElementById("acciones"); if(_ac)_ac.classList.remove("visible"); var _tcn=document.getElementById("tareaCanon"); if(_tcn)_tcn.innerHTML=""; var _bp=document.getElementById("btnPDF"); if(_bp){_bp.innerHTML="⬇ Descargar checklist PDF"; _bp.disabled=true;} var _be=document.getElementById("btnEmail"); if(_be)_be.disabled=true; var _bw=document.getElementById("btnWhatsapp"); if(_bw)_bw.disabled=true; _btnVerde(false); } }catch(e){} clearTimeout(_revT);_revT=setTimeout(revisarCaja,200);}
 (function(){const ta=document.getElementById("tarea"); if(ta){ta.addEventListener("input",_dispararRevision); ta.addEventListener("keyup",_dispararRevision); ta.addEventListener("blur",revisarCaja);}})();
 
 /* ===== Autocorrección ortográfica y gramatical automática (IA, con fallback silencioso) ===== */
