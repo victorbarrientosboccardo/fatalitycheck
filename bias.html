@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Sesgos Cognitivos MAP-v1 — FatalityCheck · v537 S537</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<nav><div class="nav-inner">
+  <a href="index.html" class="brand"><span class="icon"></span><span class="fc-icon"><svg width="18" height="18" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#f0f4f8"/><path d="M18 18 L46 46" stroke="#0B1F3B" stroke-width="9" stroke-linecap="round"/><path d="M46 18 L18 46" stroke="#3AA9FF" stroke-width="9" stroke-linecap="round"/></svg></span><span><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span></span><span class="badge">S537</span></a>
+  <button class="hamburger">☰</button>
+  <ul><li><a href="index.html">Inicio</a></li><li><a href="corpus.html">Corpus</a></li><li><a href="statistics.html">Estadísticas</a></li><li><a href="bias.html">Sesgos</a></li><li><a href="about.html">Proyecto</a></li></ul>
+</div></nav>
+
+<div class="page-hero"><h1>🧠 Sesgos Cognitivos</h1><p>Análisis MAP-v1 aplicado a 1,654 registros · Protocolo de codificación expert-coder · Invictum SPA</p></div>
+
+<div class="container">
+
+<div class="section">
+<div class="alert alert-info">
+  <strong>MAP-v1 (Methodological Analysis Protocol, v1):</strong> Protocolo de codificación de sesgos cognitivos desarrollado por Invictum SPA para investigación de accidentes mineros. Aplicado a 1,661/1,654 registros (99.9%). Estudio inter-rater (Cohen's Kappa objetivo ≥ 0.70) en preparación para publicación.
+</div>
+</div>
+
+<div class="section">
+<h2 class="section-title">📊 Distribución de Códigos Primarios MAP-v1</h2>
+<div class="card"><div class="chart-container-tall"><canvas id="biasMain"></canvas></div></div>
+</div>
+
+<div class="section">
+<h2 class="section-title">🔍 Definición de Códigos (Top 10)</h2>
+<div class="cards-grid">
+  <div class="card">
+    <div id="biasDefLeft"></div>
+  </div>
+  <div class="card">
+    <div id="biasDefRight"></div>
+  </div>
+</div>
+</div>
+
+<div class="section">
+<h2 class="section-title">🏭 Sesgo Dominante por Tipo de Accidente</h2>
+<div class="table-wrap">
+<table class="dt">
+<thead><tr><th>Tipo de accidente</th><th>N</th><th>Sesgo primario modal</th><th>% registros con ese sesgo</th></tr></thead>
+<tbody>
+<tr><td>Acarreo motorizado</td><td>549</td><td><span class="badge-bias peri">PERI-1</span></td><td>56.8%</td></tr>
+<tr><td>Atrapamiento por maquinaria</td><td>343</td><td><span class="badge-bias peri">PERI-1</span></td><td>55.1%</td></tr>
+<tr><td>Caída de persona</td><td>217</td><td><span class="badge-bias peri">PERI-1</span></td><td>45.6%</td></tr>
+<tr><td>Caída de techo</td><td>120</td><td><span class="badge-bias meta">META-1</span></td><td>41.7%</td></tr>
+<tr><td>Electrocución</td><td>114</td><td><span class="badge-bias norm">NORM-3</span></td><td>38.6%</td></tr>
+<tr><td>Explosión</td><td>71</td><td><span class="badge-bias meta">META-1</span></td><td>49.3%</td></tr>
+<tr><td>Caída de costilla</td><td>51</td><td><span class="badge-bias meta">META-1</span></td><td>43.1%</td></tr>
+<tr><td>Highwall / Talud</td><td>39</td><td><span class="badge-bias conf">CONF-2</span></td><td>38.5%</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+</div>
+<footer><div class="footer-inner"><strong><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span> · Invictum SPA</strong> · MAP-v1 · S537 · 30-ago-2026 · 1,654 registros codificados</div></footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+const BIAS_DATA = [['PERI-1',722],['META-1',203],['NORM-1',169],['NORM-2',125],['CONF-1',121],['COMP-2',52],['COMP-3',47],['NORM-3',45],['DISP-1',35],['ATAJ-1',28]];
+const BIAS_FULL = {
+  'PERI-1':'Proximidad normalizada al peligro: la posición habitual del trabajador lo situó dentro del radio letal del agente. La posición era rutinaria y aceptada por supervisor y trabajador como práctica normal.',
+  'META-1':'Falta de conciencia situacional: el trabajador o supervisor no percibió o no evaluó correctamente el estado dinámico del peligro en el momento del accidente, pese a que las señales estaban presentes.',
+  'NORM-1':'Condición de peligro conocida y no corregida: el defecto o hazard había sido documentado en exámenes previos del lugar de trabajo y no fue corregido antes del accidente.',
+  'NORM-2':'Normalización de desviaciones: la desviación del procedimiento seguro se había convertido en práctica habitual aceptada por el equipo y la supervisión a lo largo del tiempo.',
+  'CONF-1':'Sobreconfianza individual por experiencia: el trabajador subestimó el riesgo basándose en su exitosa experiencia previa con la tarea o equipo similar.',
+  'COMP-2':'Presión de tarea y tiempo: la presión de producción o de cumplimiento de plazos contribuyó a que el trabajador omitiera pasos de seguridad para completar la tarea más rápido.',
+  'COMP-3':'Prisa sistémica organizacional: la cultura organizacional promovía implícita o explícitamente terminar las tareas rápidamente, creando un ambiente donde los atajos de seguridad eran estructuralmente incentivados.',
+  'NORM-3':'Omisión de LOTO / bloqueo de energía: el procedimiento de Lockout/Tagout (bloqueo y etiquetado) fue omitido o aplicado de forma incompleta durante una tarea de mantenimiento o intervención.',
+  'DISP-1':'Distracción contextual: ruido, conversación, multitarea u otro estímulo contextual redujo la atención disponible para la identificación del peligro en el momento crítico.',
+  'ATAJ-1':'Atajo cognitivo deliberado: el trabajador eligió conscientemente un camino más corto o rápido para completar la tarea, asumiendo que el riesgo era manejable o improbable.',
+};
+(async () => {
+  await FC.loadData();
+  renderBiasChart('biasMain', BIAS_DATA);
+  const left = Object.entries(BIAS_FULL).slice(0,5);
+  const right = Object.entries(BIAS_FULL).slice(5);
+  function defHTML(entries) {
+    return entries.map(([k,v]) => {
+      const cls = k.split('-')[0].toLowerCase();
+      return `<div style="margin-bottom:14px;padding:10px 12px;background:#f7fafc;border-radius:8px;border-left:4px solid ${FC.BIAS_COLORS[k]||'#1F3864'}">
+        <div style="font-weight:700;margin-bottom:4px"><span class="badge-bias ${cls}" style="font-size:.7rem">${k}</span></div>
+        <div style="font-size:.8rem;color:#4a5568">${v}</div>
+      </div>`;
+    }).join('');
+  }
+  document.getElementById('biasDefLeft').innerHTML = defHTML(left);
+  document.getElementById('biasDefRight').innerHTML = defHTML(right);
+})();
+</script>
+</body></html>

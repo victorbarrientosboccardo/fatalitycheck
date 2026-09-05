@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Estadísticas — FatalityCheck · v537 S537</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+<body>
+<nav><div class="nav-inner">
+  <a href="index.html" class="brand"><span class="icon"></span><span class="fc-icon"><svg width="18" height="18" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#f0f4f8"/><path d="M18 18 L46 46" stroke="#0B1F3B" stroke-width="9" stroke-linecap="round"/><path d="M46 18 L18 46" stroke="#3AA9FF" stroke-width="9" stroke-linecap="round"/></svg></span><span><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span></span><span class="badge">S537</span></a>
+  <button class="hamburger">☰</button>
+  <ul><li><a href="index.html">Inicio</a></li><li><a href="corpus.html">Corpus</a></li><li><a href="statistics.html">Estadísticas</a></li><li><a href="bias.html">Sesgos</a></li><li><a href="about.html">Proyecto</a></li></ul>
+</div></nav>
+
+<div class="page-hero"><h1>📈 Estadísticas</h1><p>Análisis temporal, distribuciones demográficas y cobertura del corpus (1995–2026)</p></div>
+
+<div class="container">
+
+<div class="section">
+<h2 class="section-title">📊 Tendencia Temporal — Fatalidades por Año</h2>
+<div class="card"><div class="chart-container-tall"><canvas id="yearFull"></canvas></div></div>
+</div>
+
+<div class="section">
+<h2 class="section-title">🏭 Por Tipo de Accidente y Sector</h2>
+<div class="cards-grid">
+  <div class="card"><div class="card-title">Top 10 tipos de accidente</div><div id="typeBars"></div></div>
+  <div class="card"><div class="card-title">Por sector</div><div id="secBars"></div>
+    <div class="card-title" style="margin-top:16px">Top 15 estados</div><div id="stBars"></div>
+  </div>
+</div>
+</div>
+
+<div class="section">
+<h2 class="section-title">👤 Perfil Demográfico</h2>
+<div class="cards-grid">
+  <div class="card">
+    <div class="card-title">Distribución por edad (decenios)</div>
+    <div class="chart-container"><canvas id="ageChart"></canvas></div>
+  </div>
+  <div class="card">
+    <div class="card-title">Por turno de trabajo</div>
+    <div id="shiftBars"></div>
+    <div class="card-title" style="margin-top:14px">Por día de la semana</div>
+    <div id="dayBars"></div>
+  </div>
+</div>
+</div>
+
+<div class="section">
+<h2 class="section-title">✅ Validación del Corpus</h2>
+<div class="alert alert-success">Corpus validado vs. MSHA Part 50 oficial (1995–2025). Pearson r = 0.970 · Spearman ρ = 0.955 · Lin's CCC = 0.967 · Cobertura global 99.7%</div>
+<div class="val-grid">
+  <div class="val-card"><div class="metric">r = 0.970</div><div class="label">Pearson (N=30 años)</div></div>
+  <div class="val-card"><div class="metric">ρ = 0.955</div><div class="label">Spearman</div></div>
+  <div class="val-card"><div class="metric">0.967</div><div class="label">Lin's CCC</div></div>
+  <div class="val-card"><div class="metric">99.7%</div><div class="label">Cobertura global</div></div>
+  <div class="val-card"><div class="metric">93%</div><div class="label">Acuerdo categórico</div></div>
+  <div class="val-card"><div class="metric">99.9%</div><div class="label">Completitud ≥75 campos</div></div>
+</div>
+</div>
+
+</div>
+<footer><div class="footer-inner"><strong><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span> · Invictum SPA</strong> · S537 · 30-ago-2026</div></footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+(async () => {
+  await FC.loadData();
+  renderYearChart('yearFull', FC.byYear());
+  renderBars('typeBars', FC.count('type'), { limit:10 });
+  renderBars('secBars', FC.count('sector'), { colors:{'Coal':'#4a5568','Metal/NonMetal':'#B08D57','No Metal':'#B08D57','Metal':'#2b6cb0'} });
+  renderBars('stBars', FC.count('state'), { limit:15, defaultColor:'#276749' });
+  renderBars('shiftBars', FC.count('shift'), { limit:8 });
+  renderBars('dayBars', FC.count('day'), { limit:7 });
+  // Age chart
+  const ages = (FC.records||[]).map(r=>r.age).filter(a=>a&&a>=14&&a<=90);
+  const ageBuckets = {};
+  [20,30,40,50,60,70,80].forEach(d=>ageBuckets[`${d}-${d+9}`]=0);
+  ages.forEach(a=>{const b=Math.floor(a/10)*10;const k=`${b}-${b+9}`;if(ageBuckets[k]!==undefined)ageBuckets[k]++;});
+  const cv=document.getElementById('ageChart');
+  if(cv&&window.Chart){cv._chart=new Chart(cv,{type:'bar',data:{labels:Object.keys(ageBuckets),datasets:[{label:'Víctimas',data:Object.values(ageBuckets),backgroundColor:'#1F3864',borderRadius:4}]},options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{y:{beginAtZero:true},x:{grid:{display:false}}}}})}
+})();
+</script>
+</body></html>

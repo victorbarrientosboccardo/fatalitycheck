@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Corpus — FatalityCheck · v537 S537</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<meta name="description" content="Explorador del corpus completo FatalityCheck: 1,654 accidentes fatales en minería EE.UU. 1995-2026. Búsqueda, filtros y descarga.">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+</head>
+<body>
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="brand"><span class="icon"></span><span class="fc-icon"><svg width="18" height="18" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#f0f4f8"/><path d="M18 18 L46 46" stroke="#0B1F3B" stroke-width="9" stroke-linecap="round"/><path d="M46 18 L18 46" stroke="#3AA9FF" stroke-width="9" stroke-linecap="round"/></svg></span><span><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span></span><span class="badge">S537</span></a>
+    <button class="hamburger">☰</button>
+    <ul>
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="corpus.html">Corpus</a></li>
+      <li><a href="statistics.html">Estadísticas</a></li>
+      <li><a href="bias.html">Sesgos</a></li>
+      <li><a href="about.html">Proyecto</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <h1>📋 Explorador del Corpus</h1>
+  <p>1,654 registros activos · Búsqueda full-text + filtros combinados · Clic en fila para detalle completo</p>
+</div>
+
+<div class="container">
+<div class="section">
+
+  <!-- Search & Filters -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="search-bar">
+      <input type="text" id="q" placeholder="🔍 Buscar por ID, mina, estado, tipo, equipo, sesgo…" oninput="debouncedSearch()">
+      <select id="fYear" onchange="doSearch()">
+        <option value="">Año</option>
+        <option value="">Todos</option>
+        <script>for(let y=2026;y>=1995;y--) document.write(`<option>${y}</option>`)</script>
+      </select>
+      <select id="fSector" onchange="doSearch()">
+        <option value="">Sector</option>
+        <option value="Coal">Coal (Carbón)</option>
+        <option value="MNM">Metal/No Metal</option>
+      </select>
+      <select id="fState" onchange="doSearch()">
+        <option value="">Estado</option>
+        <option>WV</option><option>KY</option><option>PA</option><option>TX</option>
+        <option>NV</option><option>AL</option><option>VA</option><option>AZ</option>
+        <option>IL</option><option>CA</option><option>CO</option><option>UT</option>
+        <option>WY</option><option>OH</option><option>MT</option><option>TN</option>
+        <option>OK</option><option>OR</option><option>NM</option><option>ID</option>
+      </select>
+      <select id="fBias" onchange="doSearch()">
+        <option value="">Sesgo</option>
+        <option value="PERI">PERI (Proximidad)</option>
+        <option value="META">META (Conciencia sit.)</option>
+        <option value="NORM">NORM (Normalización)</option>
+        <option value="CONF">CONF (Sobreconfianza)</option>
+        <option value="COMP">COMP (Presión/Prisa)</option>
+        <option value="DISP">DISP (Distracción)</option>
+        <option value="ATAJ">ATAJ (Atajo cognitivo)</option>
+      </select>
+      <button class="btn btn-primary" onclick="doSearch()">Buscar</button>
+      <button class="btn btn-outline" onclick="clearFilters()">Limpiar</button>
+      <button class="btn btn-gold" onclick="exportCSV()">⬇ CSV</button>
+    </div>
+    <div id="result-info" style="font-size:.8rem;color:#718096;margin-top:6px"></div>
+  </div>
+
+  <!-- Table -->
+  <div class="table-wrap">
+    <table class="dt">
+      <thead>
+        <tr>
+          <th onclick="sortBy('id')" style="cursor:pointer">ID ⇅</th>
+          <th onclick="sortBy('year')" style="cursor:pointer">Año ⇅</th>
+          <th>Fecha</th>
+          <th>Sector</th>
+          <th>Tipo de accidente</th>
+          <th onclick="sortBy('state')" style="cursor:pointer">Estado ⇅</th>
+          <th onclick="sortBy('age')" style="cursor:pointer">Edad ⇅</th>
+          <th>Sesgo</th>
+        </tr>
+      </thead>
+      <tbody id="corpus-tbody">
+        <tr><td colspan="8"><div class="loading"><div class="spinner"></div>Cargando corpus…</div></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="pagination" id="pagination"></div>
+
+</div>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <div id="modal-body"></div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <strong><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span> · Invictum SPA</strong> · S537 · 30-ago-2026 · 1,654 registros · MSHA 30 CFR Part 50
+  </div>
+</footer>
+
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+<script>
+let currentPage = 1, currentSort = 'year', currentSortDir = -1;
+let debounceTimer;
+const PAGE_SIZE = 50;
+
+async function init() {
+  await FC.loadData();
+  doSearch();
+}
+
+function debouncedSearch() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => { currentPage = 1; doSearch(); }, 350);
+}
+
+function doSearch(page) {
+  if (page) currentPage = page;
+  const opts = {
+    q:       document.getElementById('q').value,
+    year:    document.getElementById('fYear').value,
+    sector:  document.getElementById('fSector').value,
+    state:   document.getElementById('fState').value,
+    bias:    document.getElementById('fBias').value,
+    page:    currentPage,
+    pageSize: PAGE_SIZE,
+  };
+  // Sort
+  let rs = FC.records ? [...FC.records] : [];
+  if (opts.q || opts.year || opts.sector || opts.state || opts.bias) {
+    rs = FC.query(opts).data;
+    // Re-query for total
+    const full = FC.query({...opts, page:1, pageSize:99999});
+    renderTable(document.getElementById('corpus-tbody'), rs);
+    document.getElementById('result-info').textContent = `${full.total.toLocaleString()} registros encontrados (página ${currentPage} de ${full.totalPages})`;
+    renderPagination('pagination', currentPage, full.totalPages, p => doSearch(p));
+  } else {
+    const sorted = rs.sort((a,b) => {
+      const av = a[currentSort], bv = b[currentSort];
+      if (av == null) return 1; if (bv == null) return -1;
+      return currentSortDir * (av > bv ? 1 : av < bv ? -1 : 0);
+    });
+    const totalPages = Math.ceil(sorted.length / PAGE_SIZE);
+    const page_data = sorted.slice((currentPage-1)*PAGE_SIZE, currentPage*PAGE_SIZE);
+    renderTable(document.getElementById('corpus-tbody'), page_data);
+    document.getElementById('result-info').textContent = `${sorted.length.toLocaleString()} registros totales (página ${currentPage} de ${totalPages})`;
+    renderPagination('pagination', currentPage, totalPages, p => doSearch(p));
+  }
+}
+
+function sortBy(field) {
+  if (currentSort === field) currentSortDir *= -1;
+  else { currentSort = field; currentSortDir = 1; }
+  doSearch(1);
+}
+
+function clearFilters() {
+  ['q','fYear','fSector','fState','fBias'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.value = '';
+  });
+  currentPage = 1;
+  doSearch();
+}
+
+function exportCSV() {
+  const q = document.getElementById('q').value;
+  const recs = q ? FC.query({q, page:1, pageSize:9999}).data : FC.records;
+  FC.downloadCSV(recs, `fatalitycheck_${q||'completo'}_${new Date().toISOString().slice(0,10)}.csv`);
+}
+
+init();
+</script>
+</body>
+</html>

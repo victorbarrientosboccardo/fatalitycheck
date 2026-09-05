@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Proyecto — FatalityCheck · v537 S537</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="stylesheet" href="css/style.css">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'></text></svg>">
+</head>
+<body>
+<nav><div class="nav-inner">
+  <a href="index.html" class="brand"><span class="icon"></span><span class="fc-icon"><svg width="18" height="18" viewBox="0 0 64 64"><rect width="64" height="64" rx="14" fill="#f0f4f8"/><path d="M18 18 L46 46" stroke="#0B1F3B" stroke-width="9" stroke-linecap="round"/><path d="M46 18 L18 46" stroke="#3AA9FF" stroke-width="9" stroke-linecap="round"/></svg></span><span><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span></span><span class="badge">S537</span></a>
+  <button class="hamburger">☰</button>
+  <ul><li><a href="index.html">Inicio</a></li><li><a href="corpus.html">Corpus</a></li><li><a href="statistics.html">Estadísticas</a></li><li><a href="bias.html">Sesgos</a></li><li><a href="about.html">Proyecto</a></li></ul>
+</div></nav>
+<div class="page-hero"><h1>ℹ Sobre el Proyecto</h1><p><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span> · Invictum SPA · Copiapó, Chile</p></div>
+<div class="container"><div class="section">
+<div class="cards-grid">
+<div class="card">
+  <div class="card-title" style="font-size:1.05rem;color:#1F3864">📋 El Corpus</div>
+  <p style="font-size:.88rem;color:#4a5568;margin-top:8px"><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span> es un corpus longitudinal verificado de 1,654 accidentes fatales en la minería de EE.UU., construido a partir de los informes de investigación MSHA bajo 30 CFR Part 50. Cubre el período 1995–2026 (32 años) con 79 parámetros por registro, incluyendo clasificación del accidente, perfil de la víctima, equipos involucrados, acciones de cumplimiento normativo y una capa de codificación de sesgos cognitivos.</p>
+  <div style="margin-top:14px"><b>Métricas de calidad (S537):</b><br>
+  <ul style="margin-top:6px;padding-left:18px;font-size:.84rem;color:#4a5568">
+    <li>1,654 registros activos (0 registros con &lt;60 campos)</li>
+    <li>99.9% de registros con ≥75/79 campos completos</li>
+    <li>Cobertura: 99.7% vs. MSHA Part 50 oficial</li>
+    <li>Correlación Pearson r=0.970, CCC=0.967</li>
+    <li>total_errors: 0 (recalc.py)</li>
+  </ul></div>
+</div>
+<div class="card">
+  <div class="card-title" style="font-size:1.05rem;color:#1F3864">🧠 MAP-v1 — Sesgos Cognitivos</div>
+  <p style="font-size:.88rem;color:#4a5568;margin-top:8px">El Methodological Analysis Protocol versión 1 (MAP-v1) es un protocolo de codificación de sesgos cognitivos en investigación de accidentes mineros desarrollado por Invictum SPA. Define 14 familias de códigos con subcódigos específicos aplicados a narrativas de investigación MSHA. Aplicado a 1,654 registros (99.9%). Estudio inter-rater (Cohen's Kappa objetivo ≥ 0.70 por familia) en preparación.</p>
+</div>
+<div class="card">
+  <div class="card-title" style="font-size:1.05rem;color:#1F3864">📄 Publicación Científica</div>
+  <p style="font-size:.88rem;color:#4a5568;margin-top:8px">Manuscrito en preparación para <em>Safety Science</em> (Q1, Elsevier) o <em>Journal of Safety Research</em> (Q2, Elsevier). El artículo describe la metodología de construcción del corpus, validación estadística y hallazgos preliminares del análisis de sesgos. Submission vía editorialmanager.com/ssci.</p>
+</div>
+<div class="card">
+  <div class="card-title" style="font-size:1.05rem;color:#1F3864">📱 App Android</div>
+  <p style="font-size:.88rem;color:#4a5568;margin-top:8px"><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span> Android app (package: spa.invictum.fatalitycheck) permite búsqueda y filtrado offline de los 1,654 registros. Disponible en Google Play Console (en desarrollo). Datos actualizados a S537.</p>
+</div>
+</div>
+
+<div class="section">
+<h2 class="section-title">🔗 Fuentes de Datos</h2>
+<div class="card">
+<table class="dt"><thead><tr><th>Fuente</th><th>Tipo</th><th>Uso</th></tr></thead>
+<tbody>
+<tr><td><a href="https://www.msha.gov" target="_blank">msha.gov</a></td><td>Fuente primaria</td><td>Fatality Alerts, Preliminary Reports, Final Reports</td></tr>
+<tr><td><a href="https://miningincidents.org" target="_blank">miningincidents.org</a></td><td>Referencia post-chargeback</td><td>Verificación definitiva tras revisiones de chargeabilidad</td></tr>
+<tr><td>arlweb.msha.gov</td><td>Registros históricos</td><td>Informes 1995–2005 (sistema legacy)</td></tr>
+<tr><td>Agencias estatales (KY EEC, WV MHST)</td><td>Secundaria</td><td>Verificación demográfica, informes paralelos</td></tr>
+<tr><td>Prensa local y regional</td><td>Terciaria</td><td>Nombres víctimas, edades, detalles no en MSHA</td></tr>
+</tbody></table>
+</div>
+</div>
+</div></div>
+<footer><div class="footer-inner"><strong><span class="fc-w1">Fatality</span><span class="fc-w2">Check</span> · Invictum SPA · Copiapó, Chile</strong><br>S537 · 30 agosto 2026 · <a href="mailto:info@invictum.cl">info@invictum.cl</a></div></footer>
+<script src="js/data.js"></script><script src="js/app.js"></script>
+</body></html>

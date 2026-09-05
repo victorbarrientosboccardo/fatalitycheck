@@ -1,0 +1,15 @@
+title: FatalityCheck
+description: "Corpus longitudinal verificado de accidentes fatales en minería EE.UU. (MSHA 30 CFR Part 50, 1995-2026). Invictum SPA."
+baseurl: "/fatalitycheck"
+url: "https://invictumspa.github.io"
+lang: es
+author: Victor Barrientos Boccardo
+version: S537
+theme: null
+plugins: []
+exclude:
+  - "*.py"
+  - "*.sh"
+  - "node_modules"
+  - "Gemfile"
+  - ".github"
