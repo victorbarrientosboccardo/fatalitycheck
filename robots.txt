@@ -1,5 +1,0 @@
-User-agent: *
-Allow: /
-Disallow: /data/corpus_v537.json
-
-Sitemap: https://invictumspa.github.io/fatalitycheck/sitemap.xml
