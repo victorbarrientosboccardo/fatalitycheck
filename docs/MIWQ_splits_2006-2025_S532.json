@@ -1,0 +1,194 @@
+{
+ "miwq_raw": {
+  "2006": {
+   "coal": 47,
+   "mnm": 0,
+   "total": 47,
+   "det": {
+    "coal_op": 42,
+    "coal_co": 5
+   }
+  },
+  "2007": {
+   "coal": 34,
+   "mnm": 0,
+   "total": 34,
+   "det": {
+    "coal_op": 28,
+    "coal_co": 6
+   }
+  },
+  "2008": {
+   "coal": 30,
+   "mnm": 0,
+   "total": 30,
+   "det": {
+    "coal_op": 18,
+    "coal_co": 12
+   }
+  },
+  "2009": {
+   "coal": 18,
+   "mnm": 0,
+   "total": 18,
+   "det": {
+    "coal_op": 10,
+    "coal_co": 8
+   }
+  },
+  "2010": {
+   "coal": 48,
+   "mnm": 0,
+   "total": 48,
+   "det": {
+    "coal_op": 44,
+    "coal_co": 4
+   }
+  },
+  "2011": {
+   "coal": 21,
+   "mnm": 0,
+   "total": 21,
+   "det": {
+    "coal_op": 14,
+    "coal_co": 7
+   }
+  },
+  "2012": {
+   "coal": 20,
+   "mnm": 0,
+   "total": 20,
+   "det": {
+    "coal_op": 18,
+    "coal_co": 2
+   }
+  },
+  "2013": {
+   "coal": 20,
+   "mnm": 21,
+   "total": 41,
+   "det": {
+    "coal_op": 18,
+    "coal_co": 2,
+    "mnm_op": 19,
+    "mnm_co": 2
+   }
+  },
+  "2014": {
+   "coal": 16,
+   "mnm": 29,
+   "total": 45,
+   "det": {
+    "coal_op": 13,
+    "coal_co": 3,
+    "mnm_op": 20,
+    "mnm_co": 9
+   }
+  },
+  "2015": {
+   "coal": 11,
+   "mnm": 17,
+   "total": 28,
+   "det": {
+    "coal_op": 9,
+    "coal_co": 2,
+    "mnm_op": 11,
+    "mnm_co": 6
+   }
+  },
+  "2016": {
+   "coal": 8,
+   "mnm": 17,
+   "total": 25,
+   "det": {
+    "coal_op": 8,
+    "coal_co": 0,
+    "mnm_op": 12,
+    "mnm_co": 5
+   }
+  },
+  "2017": {
+   "coal": 15,
+   "mnm": 13,
+   "total": 28,
+   "det": {
+    "coal_op": 14,
+    "mnm_op": 12,
+    "coal_co": 1,
+    "mnm_co": 1
+   }
+  },
+  "2018": {
+   "coal": 12,
+   "mnm": 16,
+   "total": 28,
+   "det": {
+    "coal_op": 11,
+    "mnm_op": 14,
+    "coal_co": 1,
+    "mnm_co": 2
+   }
+  },
+  "2019": {
+   "coal": 12,
+   "mnm": 15,
+   "total": 27,
+   "det": {
+    "coal_op": 10,
+    "coal_co": 2,
+    "mnm_op": 8,
+    "mnm_co": 7
+   }
+  },
+  "2020": {
+   "coal": 0,
+   "mnm": 0,
+   "total": 0,
+   "det": {}
+  },
+  "2021": {
+   "coal": 0,
+   "mnm": 0,
+   "total": 0,
+   "det": {}
+  },
+  "2022": {
+   "coal": 0,
+   "mnm": 0,
+   "total": 0,
+   "det": {}
+  },
+  "2023": {
+   "coal": 0,
+   "mnm": 0,
+   "total": 0,
+   "det": {}
+  },
+  "2024": {
+   "coal": 0,
+   "mnm": 0,
+   "total": 0,
+   "det": {}
+  },
+  "2025": {
+   "coal": 0,
+   "mnm": 0,
+   "total": 0,
+   "det": {}
+  }
+ },
+ "sellables_coal": {
+  "2006": 47,
+  "2007": 34,
+  "2008": 30,
+  "2009": 18,
+  "2010": 48,
+  "2012": 20,
+  "2013": 20,
+  "2014": 16,
+  "2016": 8,
+  "2017": 15,
+  "2018": 12
+ },
+ "nota": "MIWQ=corte al cierre CY sin chargebacks tard\u00edos. 2013-2019 con MNM completo (T2/T6). 2006-2012 MNM pendiente (t\u00edtulo tabla difiere). 2020-2025 = PDFs-imagen: requieren OCR (S533+). 2019 \u0394 especial: MIWQ 12/15=27 vs corpus \u2014 revisar definiciones (office workers/chargebacks) antes de concluir."
+}

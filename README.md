@@ -23,9 +23,9 @@ fatalitycheck-web/
 │   ├── data.js         # Motor de consultas y datos
 │   └── app.js          # Componentes UI y charts
 ├── data/
-│   ├── corpus_v537.json   # Corpus completo (1,654 registros)
-│   ├── summary_v537.json  # Resumen estadístico
-│   └── corpus_v537.csv    # Exportación CSV
+│   ├── corpus_v572.json   # Corpus completo (1,656 registros)
+│   ├── summary_v572.json  # Resumen estadístico
+│   └── corpus_v572.csv    # Exportación CSV
 └── .github/workflows/
     └── deploy.yml      # GitHub Actions (auto-deploy)
 ```
@@ -45,9 +45,11 @@ fatalitycheck-web/
 - Sin backend — datos estáticos en JSON
 - Compatible con GitHub Pages (Jekyll estático)
 
-## Corpus S537
+## Corpus S572
 
-- 1,654 registros activos · 79 parámetros
+_Métricas de cobertura/correlación: validación S541-S542 (no recalculadas; conteos S572: 1,656 registros, 2026 = 25)._
+
+- 1,656 registros activos · 79 parámetros
 - Cobertura 99.7% · Pearson r=0.970
 - Completitud 99.9% (≥75/79 campos)
 - total_errors: 0
