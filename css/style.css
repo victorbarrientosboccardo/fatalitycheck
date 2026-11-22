@@ -1,39 +1,39 @@
 /* ══════════════════════════════════════════════════════
    FatalityCheck — Global Stylesheet
-   Version S543 · Manual de Normas Gráficas Ecosistema Invictum v2.0
-   Base compartida: navy #0d1b2a · crema #f8f6f2 · oro #b8975a (solo sobre navy)
-   Acentos FC: azul profundo #0B1F3B · azul claro #3AA9FF · ámbar #e0762e
-   Tipografía: DM Sans (titular 600 · cuerpo 300/400 · eyebrow 500 MAYÚSCULAS .2em)
-   Reglas críticas: oro nunca sobre crema · texto sobre navy = crema 65% ·
-   nav links sobre navy #c9d2dc · nunca emoji
+   Version S572 · Manual de Normas Gráficas Ecosistema Invictum v2.15
+   Superficie dominante: niebla #e8eef4 · Navy solo nav+pie
+   Acento FC: cobalto #2563eb · texto acento claro: #1a4292 · ámbar: solo franja advertencia
+   Tipografía: DM Sans cuerpo · Poppins SemiBold 600 wordmark
    ══════════════════════════════════════════════════════ */
-@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Poppins:wght@600&display=swap');
 
 :root {
-  --navy:     #0d1b2a;   /* fondo página y nav */
-  --navy2:    #14273b;   /* navy superior — fondo tarjetas ecosistema */
-  --crema:    #f8f6f2;   /* fondo principal del sitio */
-  --crema65:  rgba(248,246,242,0.65);  /* texto sobre tarjetas navy */
-  --gold:     #b8975a;   /* oro: SOLO sobre navy, nunca sobre crema */
+  --navy:     #0d1b2a;   /* nav + pie */
+  --navy2:    #14273b;
+  --niebla:   #e8eef4;   /* superficie dominante FatalityCheck */
+  --crema:    #f8f6f2;   /* fondo tarjetas y paneles */
+  --crema65:  rgba(248,246,242,0.65);
+  --gold:     #b8975a;   /* solo sobre navy */
   --gold2:    #b8975a;
-  --fc-deep:  #0B1F3B;   /* azul profundo — "Fatality", trazo principal */
-  --fc-blue:  #3AA9FF;   /* azul claro — "Check", trazo secundario */
-  --ambar:    #e0762e;   /* acento ecosistema — CTA, bordes, eyebrows */
-  --gris:     #6b6b6b;   /* texto secundario */
+  --fc-deep:  #0d1b2a;   /* navy — "Fatality", trazo principal */
+  --fc-blue:  #2563eb;   /* cobalto — "Check", trazo secundario */
+  --ambar:    #e0762e;   /* solo franja de advertencia */
+  --gris:     #64748b;   /* texto secundario */
   --navtext:  #c9d2dc;   /* nav links sobre navy */
-  --icon-bg:  #f0f4f8;   /* gris azulado — fondo del ícono */
-  --light:    #f8f6f2;
+  --icon-bg:  #f0f4f8;
+  --light:    #e8eef4;   /* = niebla */
   --white:    #ffffff;
-  --dark:     #0B1F3B;
-  --coal:     #0B1F3B;
-  --muted:    #6b6b6b;
-  --border:   #e5e0d8;
+  --dark:     #0d1b2a;
+  --coal:     #0d1b2a;
+  --muted:    #64748b;
+  --border:   #cbd5e1;
   --red:      #c8102e;
   --green:    #2a9d8f;
-  --blue:     #3AA9FF;
+  --blue:     #2563eb;
   --shadow:   0 2px 8px rgba(13,27,42,0.10);
   --radius:   10px;
   --font:     'DM Sans', 'Helvetica Neue', Arial, sans-serif;
+  --font-mark:'Poppins', system-ui, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -234,13 +234,13 @@ table.dt tbody td { padding: 9px 14px; border-bottom: 1px solid var(--border); v
 table.dt tbody tr:nth-child(even) td { background: #f7fafc; }
 table.dt tbody tr:hover td { background: #ebf4ff; }
 .badge-sector { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: .7rem; font-weight: 600; }
-.badge-coal { background: #0B1F3B; color: #fff; }
+.badge-coal { background: #0d1b2a; color: #fff; }
 .badge-mnm  { background: #b8975a; color: #fff; }
-.badge-metal{ background: #3AA9FF; color: #fff; }
+.badge-metal{ background: #2563eb; color: #fff; }
 .badge-bias { display: inline-block; background: var(--navy); color: #fff; padding: 2px 8px; border-radius: 10px; font-size: .68rem; font-weight: 700; }
 .badge-bias.peri { background: #c8102e; }
 .badge-bias.meta { background: #dd6b20; }
-.badge-bias.norm { background: #d69e2e; color: #0B1F3B; }
+.badge-bias.norm { background: #d69e2e; color: #0d1b2a; }
 .badge-bias.conf { background: #276749; }
 .badge-bias.comp { background: #6b46c1; }
 
@@ -311,7 +311,7 @@ footer a:hover { text-decoration: underline; }
 
 /* ── ALERT ── */
 .alert { padding: 12px 18px; border-radius: 8px; margin-bottom: 16px; font-size: .88rem; }
-.alert-info { background: #ebf8ff; color: #3AA9FF; border-left: 4px solid #3AA9FF; }
+.alert-info { background: #eff6ff; color: #1a4292; border-left: 4px solid #2563eb; }
 .alert-success { background: #f0fff4; color: #276749; border-left: 4px solid #276749; }
 
 /* ── RESPONSIVE ── */

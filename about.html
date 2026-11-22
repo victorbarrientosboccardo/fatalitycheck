@@ -6,39 +6,37 @@
 <title>Acerca de — FatalityCheck · S572</title>
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700;800&family=Poppins:wght@600&display=swap" rel="stylesheet">
 <style>
   :root{
-    --carbon:#0d1b2a; --carbon-2:#0a1420;
-    --superficie:#14273b; --superficie-2:#1b3350;
-    --acero-claro:#22405f; --linea:rgba(248,246,242,.08);
+    --carbon:#0d1b2a;
+    --niebla:#e8eef4; --linea:rgba(13,27,42,.10);
     --amarillo:#e0762e;
-    --hueso:#f8f6f2; --gris-texto:#c9d2dc; --tenue:#8494a5;
-    --azul:#3AA9FF;
+    --gris-texto:#374151; --tenue:#64748b;
+    --azul:#2563eb; --azul-700:#1a4292;
   }
   *{margin:0;padding:0;box-sizing:border-box}
   html{scroll-behavior:smooth}
   body{
-    background:linear-gradient(180deg, var(--carbon) 0%, var(--carbon-2) 100%);
-    background-attachment:fixed;
-    color:var(--hueso);
+    background:var(--niebla);
+    color:var(--carbon);
     font-family:'DM Sans',system-ui,-apple-system,sans-serif;
     min-height:100vh; font-size:16px; line-height:1.6;
     -webkit-font-smoothing:antialiased;
   }
-  .cinta{height:4px; background:repeating-linear-gradient(135deg,var(--amarillo) 0 9px,#1A1305 9px 18px); opacity:.9;}
+  .cinta{height:4px; background:repeating-linear-gradient(135deg,var(--amarillo) 0 9px,#c96525 9px 18px); opacity:.9;}
 
   /* NAV */
-  nav{border-bottom:1px solid var(--linea); padding:0 24px;}
+  nav{border-bottom:1px solid rgba(255,255,255,.08); padding:0 24px; background:var(--carbon);}
   .nav-inner{max-width:860px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; height:54px;}
-  .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:var(--hueso);}
-  .brand svg{width:22px; height:22px; flex:none; opacity:.88;}
-  .brand-nom{font-size:16px; font-weight:700;}
-  .brand-nom b{color:var(--azul);}
+  .brand{display:flex; align-items:center; gap:10px; text-decoration:none; color:#f8f6f2;}
+  .brand svg{width:22px; height:22px; flex:none;}
+  .brand-nom{font-size:16px; font-weight:600; font-family:'Poppins',system-ui,sans-serif;}
+  .brand-nom b{color:#6f9bff;}
   .nav-links{display:flex; gap:6px;}
-  .nav-links a{text-decoration:none; color:var(--tenue); font-size:13.5px; font-weight:500; padding:6px 12px; border-radius:8px; transition:color .15s, background .15s;}
-  .nav-links a:hover{color:var(--hueso); background:rgba(255,255,255,.06);}
-  .nav-links a.active{color:var(--hueso); font-weight:700;}
+  .nav-links a{text-decoration:none; color:#8494a5; font-size:13.5px; font-weight:500; padding:6px 12px; border-radius:8px; transition:color .15s, background .15s;}
+  .nav-links a:hover{color:#f8f6f2; background:rgba(255,255,255,.06);}
+  .nav-links a.active{color:#f8f6f2; font-weight:700;}
   @media(max-width:520px){.nav-links{display:none;}}
 
   /* CONTENIDO */
@@ -50,9 +48,9 @@
   }
   h1{
     font-size:clamp(28px,5vw,42px); font-weight:800; letter-spacing:-.02em;
-    line-height:1.1; margin-bottom:28px;
+    line-height:1.1; margin-bottom:28px; color:var(--carbon);
   }
-  h1 span{color:var(--azul);}
+  h1 span{color:var(--azul-700);}
 
   .lead{
     font-size:clamp(16px,2.2vw,19px); color:var(--gris-texto); line-height:1.65;
@@ -66,19 +64,19 @@
   }
 
   .bloque{margin-bottom:32px;}
-  .bloque h2{font-size:15px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--amarillo); margin-bottom:10px;}
-  .bloque p{font-size:15.5px; color:#b8c4cf; line-height:1.7;}
+  .bloque h2{font-size:15px; font-weight:800; letter-spacing:.08em; text-transform:uppercase; color:var(--azul-700); margin-bottom:10px;}
+  .bloque p{font-size:15.5px; color:var(--gris-texto); line-height:1.7;}
   .bloque p + p{margin-top:12px;}
 
   .firma{
     margin-top:56px; padding-top:28px; border-top:1px solid var(--linea);
     font-size:13px; color:var(--tenue); line-height:1.7;
   }
-  .firma b{color:var(--gris-texto); font-weight:600;}
+  .firma b{color:var(--carbon); font-weight:600;}
 
   footer{
-    border-top:1px solid var(--linea); padding:20px 24px;
-    text-align:center; font-size:12px; color:var(--tenue);
+    background:var(--carbon); border-top:1px solid rgba(255,255,255,.08); padding:20px 24px;
+    text-align:center; font-size:12px; color:#8494a5;
   }
 </style>
 </head>
@@ -87,15 +85,15 @@
 <nav>
   <div class="nav-inner">
     <a href="index.html" class="brand">
-      <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="13" aria-hidden="true">
-        <path d="M15 15 49 49" opacity=".5"/><path d="M49 15 15 49"/>
+      <svg viewBox="0 0 64 64" fill="none" stroke-width="13" aria-hidden="true">
+        <rect width="64" height="64" rx="14" fill="#e8eef4"/>
+        <path d="M15 15 49 49" stroke="#0d1b2a"/>
+        <path d="M49 15 15 49" stroke="#6f9bff"/>
       </svg>
       <span class="brand-nom">Fatality<b>Check</b></span>
     </a>
     <div class="nav-links">
       <a href="index.html">Asesor</a>
-      <a href="statistics.html">Estadísticas</a>
-      <a href="bias.html">Sesgos</a>
       <a href="about.html" class="active">Acerca de</a>
     </div>
   </div>
